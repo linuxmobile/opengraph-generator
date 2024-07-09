@@ -12,6 +12,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^0.0.36",
     "@ai-sdk/vue": "^0.0.13",
+    "@unocss/nuxt": "^0.61.3",
     "ai": "^3.2.19",
     "nuxt": "^3.12.3",
     "vue": "latest",
