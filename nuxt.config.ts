@@ -4,8 +4,8 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
 
     runtimeConfig: {
-		openaiApiKey: process.env.OPENAI_API_KEY,
-	},
-
+        openaiApiKey: process.env.OPENAI_API_KEY,
+    },
+    css: ["@unocss/reset/tailwind.css"],
     modules: ["@unocss/nuxt"]
 });
