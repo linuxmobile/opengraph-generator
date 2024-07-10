@@ -7,5 +7,5 @@ export default defineNuxtConfig({
         openaiApiKey: process.env.OPENAI_API_KEY,
     },
     css: ["@unocss/reset/tailwind.css"],
-    modules: ["@unocss/nuxt"]
+    modules: ["@unocss/nuxt", "nuxt-lucide-icons"]
 });
