@@ -13,13 +13,17 @@
 import { Search } from 'lucide-vue-next';
 
 const url = ref('');
+const router = useRouter();
 
-const { setMetadata } = useMetadata();
+const { setMetadata, metadata } = useMetadata();
 
 const handleSubmit = async () => {
   try {
     const fetchedMetadata = await $fetch(`/api/extract-metadata?url=${encodeURIComponent(url.value)}`);
     setMetadata(fetchedMetadata);
+    if (metadata.value){
+      router.push('/opengraph');
+    }
   } catch (error) {
     console.error('Error fetching metadata:', error);
     setMetadata(null);
