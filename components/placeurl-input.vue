@@ -18,6 +18,7 @@ const handleSubmit = async () => {
   try {
     const fetchedMetadata = await $fetch(`/api/extract-metadata?url=${encodeURIComponent(url.value)}`);
     useMetadata(fetchedMetadata);
+    console.log('Metadata fetched:', fetchedMetadata);
   } catch (error) {
     console.error('Error fetching metadata:', error);
     useMetadata(null);
