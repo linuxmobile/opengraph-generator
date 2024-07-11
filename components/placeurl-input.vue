@@ -7,30 +7,20 @@
       </button>
     </div>
   </form>
-  <div v-if="metadata" class="mt-4">
-    <div v-for="(value, key) in metadata" :key="key" class="py-2">
-      <strong>{{ key }}:</strong> {{ value }}
-    </div>
-  </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { Search } from 'lucide-vue-next';
 
-interface Metadata {
-  [key: string]: string | null;
-}
-
 const url = ref('');
-const metadata = ref<Metadata | null>(null);
 
 const handleSubmit = async () => {
   try {
-    const fetchedMetadata = await $fetch<Metadata>(`/api/extract-metadata?url=${encodeURIComponent(url.value)}`);
-    metadata.value = fetchedMetadata;
+    const fetchedMetadata = await $fetch(`/api/extract-metadata?url=${encodeURIComponent(url.value)}`);
+    useMetadata(fetchedMetadata);
   } catch (error) {
     console.error('Error fetching metadata:', error);
-    metadata.value = null;
+    useMetadata(null);
   }
 };
 </script>
