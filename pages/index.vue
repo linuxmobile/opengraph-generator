@@ -1,4 +1,4 @@
 <script setup lang="ts"></script>
 <template>
-  <PlaceurlInput />
+  <PlaceUrlInput />
 </template>
