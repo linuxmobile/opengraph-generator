@@ -4,6 +4,7 @@
     :title="metadata.title"
     :description="metadata.description"
     :author="metadata.author"
+    :url="metadata.url"
     />
     <section class="h-full">
       <div v-for="(value, key) in metadata" :key="key">

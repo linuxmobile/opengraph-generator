@@ -15,10 +15,15 @@ function shuffleArray(array: Gradient[]) {
 }
 
 export const useGradients = () => {
-  const allGradientsShuffled = shuffleArray([...gradients]);
+  let allGradientsShuffled = shuffleArray([...gradients]);
+  allGradientsShuffled = allGradientsShuffled.map((gradient, index) => ({
+    ...gradient,
+    id: (index % 9) + 1,
+  }));
+
   const [allRandomGradients] = useGlobalGenericState<Gradient[]>('allRandomGradients', allGradientsShuffled);
 
-  const fewGradientsShuffled = allGradientsShuffled.slice(0, 9)
+  const fewGradientsShuffled = allGradientsShuffled.slice(0, 9);
 
   const [fewRandomGradients] = useGlobalGenericState<Gradient[]>('fewRandomGradients', fewGradientsShuffled);
 
