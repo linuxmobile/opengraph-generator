@@ -1,20 +1,21 @@
 <template>
-    <nav class="flex justify-between p-2 border w-auto">
-      <div>logo</div>
-      <div>
-        <ul class="flex space-x-4">
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-        </ul>
-      </div>
-    </nav>
+  <nav class="flex justify-between items-center content-center p-2 w-auto border-b border-gray-800">
+    <div>logo</div>
+    <div>
+      <ul class="flex space-x-4xl items-center content-center">
+        <li class="flex items-center p-2 hover:bg-dark rounded-md cursor-pointer gap-2 text-size-[14px] font-500">
+          <Github size="16"  /> Star on GitHub
+        </li>
+        <li class="flex items-center p-2 hover:bg-dark rounded-md cursor-pointer gap-2 text-size-[15px] font-500">
+          <Sun size="16" /> Light Mode
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
-<script>
-export default {
-  
-}
+
+<script setup>
+import { Sun } from 'lucide-vue-next';
+import { Github } from 'lucide-vue-next';
+
 </script>
-<style lang="">
-  
-</style>
