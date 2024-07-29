@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex justify-between items-center content-center p-2 w-auto border-b border-gray-800">
+  <nav class="flex  justify-between items-center content-center p-2 w-auto border-b border-gray-800">
     <div>logo</div>
     <div>
       <ul class="flex space-x-4xl items-center content-center">

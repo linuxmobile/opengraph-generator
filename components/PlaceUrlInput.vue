@@ -1,6 +1,6 @@
 <template>
 
-  <form @submit.prevent="handleSubmit" class="flex gap-4 flex-col items-center justify-center">
+  <form @submit.prevent="handleSubmit" class="flex gap-10 flex-col items-center justify-center">
     <div class="text-center">
       <h1 class="text-size-6xl text-balance font-900"><span class="generate">Generate</span> and <span
           class="preview">preview</span> <br>
