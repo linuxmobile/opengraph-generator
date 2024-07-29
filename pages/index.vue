@@ -6,5 +6,4 @@
   <main class="place-content-center flex h-[90vh] [&>div]:h-full ">
     <PlaceUrlInput />
   </main>
-  
 </template>
