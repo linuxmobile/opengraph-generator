@@ -4,8 +4,9 @@
 
 <script setup lang="ts">
 useHead({
-  bodyAttrs:{
-    class: 'bg-black text-white grid place-content-center min-h-screen [&>div]:h-full overflow-hidden'
-  },
-})
+	bodyAttrs: {
+		class:
+			"bg-slate-950 text-white grid place-content-center min-h-screen [&>div]:h-full relative overflow-hidden",
+	},
+});
 </script>
