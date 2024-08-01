@@ -1,37 +1,43 @@
 import { useGlobalGenericState } from "~/utils/useGlobalGenericState";
-import gradients from '~/assets/gradients.json'
 
-interface Gradient {
-  id: number;
-  gradient: string;
+const gradientImages: { [key: string]: string } = {
+	image1: "/assets/1.jpg",
+	image2: "/assets/2.jpg",
+	image3: "/assets/3.jpg",
+	image4: "/assets/4.jpg",
+	image5: "/assets/5.jpg",
+	image6: "/assets/6.jpg",
+	image7: "/assets/7.jpg",
+	image8: "/assets/8.jpg",
+	image9: "/assets/9.jpg",
+	image10: "/assets/10.jpg",
+};
+
+interface GradientImage {
+	id: number;
+	gradient: string;
 }
 
-function shuffleArray(array: Gradient[]) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
+const getRandomGradients = (count: number): GradientImage[] => {
+	const keys = Object.keys(gradientImages);
+	const shuffled = keys.sort(() => 0.5 - Math.random());
+	return shuffled.slice(0, count).map((key, index) => ({
+		id: index + 1,
+		gradient: gradientImages[key],
+	}));
+};
 
 export const useGradients = () => {
-  let allGradientsShuffled = shuffleArray([...gradients]);
-  allGradientsShuffled = allGradientsShuffled.map((gradient, index) => ({
-    ...gradient,
-    id: (index % 9) + 1,
-  }));
+	const [gradients, setGradients] = useGlobalGenericState<GradientImage[]>("gradients", []);
 
-  const [allRandomGradients] = useGlobalGenericState<Gradient[]>('allRandomGradients', allGradientsShuffled);
+	if (!Array.isArray(gradients)) {
+		setGradients([]);
+	}
 
-  const fewGradientsShuffled = allGradientsShuffled.slice(0, 9);
+	const fetchGradients = (count: number) => {
+		const newGradients = getRandomGradients(count);
+		setGradients(newGradients);
+	};
 
-  const [fewRandomGradients] = useGlobalGenericState<Gradient[]>('fewRandomGradients', fewGradientsShuffled);
-
-  const [orderedGradients, setOrderedGradientsState] = useGlobalGenericState<Gradient[]>('orderedGradients', []);
-
-  const setOrderedGradients = (gradients: Gradient[]) => {
-    setOrderedGradientsState(gradients);
-  };
-
-  return { allRandomGradients, fewRandomGradients, orderedGradients, setOrderedGradients };
-}
+	return { gradients, fetchGradients };
+};

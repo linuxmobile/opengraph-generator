@@ -1,65 +1,37 @@
 [
-  {
-    "id": 1,
-    "title": "font-bold text-lg",
-    "description": "font-bold text-lg",
-    "author": "font-bold text-lg",
-    "url": "font-semibold"
-  },
-  {
-    "id": 2,
-    "title": "font-bold text-lg",
-    "description": "font-bold text-lg",
-    "author": "font-bold text-lg",
-    "url": "font-semibold"
-  },
-  {
-    "id": 3,
-    "title": "font-bold text-lg",
-    "description": "font-bold text-lg",
-    "author": "font-bold text-lg",
-    "url": "font-semibold"
-  },
-  {
-    "id": 4,
-    "title": "font-medium text-md",
-    "description": "font-medium text-md",
-    "author": "font-medium text-md",
-    "url": "font-normal"
-  },
-  {
-    "id": 5,
-    "title": "font-light text-sm",
-    "description": "font-light text-sm",
-    "author": "font-light text-sm",
-    "url": "font-thin"
-  },
-  {
-    "id": 6,
-    "title": "font-extrabold text-xl",
-    "description": "font-extrabold text-xl",
-    "author": "font-extrabold text-xl",
-    "url": "font-bold"
-  },
-  {
-    "id": 7,
-    "title": "font-semibold text-lg",
-    "description": "font-semibold text-lg",
-    "author": "font-semibold text-lg",
-    "url": "font-medium"
-  },
-  {
-    "id": 8,
-    "title": "font-thin text-xs",
-    "description": "font-thin text-xs",
-    "author": "font-thin text-xs",
-    "url": "font-light"
-  },
-  {
-    "id": 9,
-    "title": "font-extralight text-sm",
-    "description": "font-extralight text-sm",
-    "author": "font-extralight text-sm",
-    "url": "font-thin"
-  }
+	{
+		"id": 1,
+		"title": "font-bold text-lg",
+		"description": "font-bold text-lg",
+		"author": "font-bold text-lg",
+		"url": "font-semibold"
+	},
+	{
+		"id": 2,
+		"title": "font-bold text-lg",
+		"description": "font-bold text-lg",
+		"author": "font-bold text-lg",
+		"url": "font-semibold"
+	},
+	{
+		"id": 3,
+		"title": "font-bold text-lg",
+		"description": "font-bold text-lg",
+		"author": "font-bold text-lg",
+		"url": "font-semibold"
+	},
+	{
+		"id": 4,
+		"title": "font-medium text-md",
+		"description": "font-medium text-md",
+		"author": "font-medium text-md",
+		"url": "font-normal"
+	},
+	{
+		"id": 5,
+		"title": "font-light text-sm",
+		"description": "font-light text-sm",
+		"author": "font-light text-sm",
+		"url": "font-thin"
+	}
 ]
