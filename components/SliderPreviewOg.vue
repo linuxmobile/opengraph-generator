@@ -1,16 +1,15 @@
 
 <template>
-  <section class="bg-slate-900 w-full h-60% py-4">
-    <div class="h-full flex flex-row gap-x-2 max-w-screen overflow-x-auto px-4">
+  <section class="w-full h-50% py-4">
+    <div class="h-full flex flex-row gap-x-6 max-w-screen overflow-x-auto snap-x snap-mandatory">
       <div
+        @click="handleOpengraph(gradient.id)"
         v-for="gradient in gradientsWithStyles"
         :key="gradient.id"
-        class="relative rounded-xl aspect-video w-max-content h-60% p-3">
-        <img
-          :src="gradient.gradient"
-          alt="Gradient Background"
-          class="absolute inset-0 w-full h-full object-cover z-0 rounded-3xl"/>
-        <div class="relative z-10 text-white">
+        :style="{ backgroundImage: `url(${gradient.gradient})` }"
+        class="relative rounded-3xl aspect-video w-max-content h-full p-3
+          select-none cursor-pointer bg-cover bg-center snap-center">
+        <div class="text-white">
           <p :class="gradient.style.title">{{ title }}</p>
           <p :class="gradient.style.description" class="line-clamp-2">{{ description }}</p>
           <p :class="gradient.style.author">{{ author }}</p>
@@ -23,6 +22,7 @@
 <script setup>
 import styles from "~/assets/styles.json";
 const { gradients, fetchGradients } = useGradients();
+const { setOpengraphID } = useOpengraph();
 
 const props = defineProps({
 	title: String,
@@ -42,6 +42,10 @@ const gradientsWithStyles = computed(() => {
 		return { ...gradient, style };
 	});
 });
+
+const handleOpengraph = (id) => {
+	setOpengraphID(id);
+};
 
 onMounted(() => {
 	fetchGradients(5);

@@ -1,10 +1,10 @@
 [
 	{
 		"id": 1,
-		"title": "font-bold text-lg",
-		"description": "font-bold text-lg",
+		"title": "font-bold text-2xl",
+		"description": "font-semibold",
 		"author": "font-bold text-lg",
-		"url": "font-semibold"
+		"url": "text-center"
 	},
 	{
 		"id": 2,

@@ -1,16 +1,17 @@
 <template>
-  <main class="relative h-screen w-full flex flex-col-reverse">
+  <main class="relative h-screen w-full flex flex-col-reverse p-5">
     <SliderPreviewOg
     :title="metadata.title"
     :description="metadata.description"
     :author="metadata.author"
     :url="metadata.url"
     />
-    <section class="h-full">
-      <div v-for="(value, key) in metadata" :key="key">
-        <p>{{ value }}</p>
-      </div>
-    </section>
+    <PreviewOG
+    :title="metadata.title"
+    :description="metadata.description"
+    :author="metadata.author"
+    :url="metadata.url"
+    />
   </main>
 </template>
 <script setup>
