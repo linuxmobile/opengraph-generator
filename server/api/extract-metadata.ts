@@ -5,7 +5,9 @@ type Metadata = {
 	description: string | null;
 	author: string | null;
 	keywords: string | null;
-	[key: string]: string | null;
+	favicon: string | null;
+	headings: { h1: string[]; h2: string[]; h3: string[] };
+	[key: string]: string | null | { h1: string[]; h2: string[]; h3: string[] };
 };
 
 export default defineEventHandler(async (event) => {
@@ -30,7 +32,18 @@ export default defineEventHandler(async (event) => {
 			description: $('head meta[name="description"]').attr("content") || null,
 			author: $('head meta[name="author"]').attr("content") || null,
 			keywords: $('head meta[name="keywords"]').attr("content") || null,
-			headings: $("h1, h2, h3").attr("content") || null,
+			favicon: $('link[rel="icon"]').attr("href") || null,
+			headings: {
+				h1: $("h1")
+					.map((i, el) => $(el).text())
+					.get(),
+				h2: $("h2")
+					.map((i, el) => $(el).text())
+					.get(),
+				h3: $("h3")
+					.map((i, el) => $(el).text())
+					.get(),
+			},
 		};
 
 		$("meta").each((i, el) => {

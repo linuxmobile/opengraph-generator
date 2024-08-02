@@ -8,13 +8,13 @@
     />
     <section class="h-full">
       <div v-for="(value, key) in metadata" :key="key">
-        <strong>{{ key }}:</strong> {{ value }}
+        <p>{{ value }}</p>
       </div>
     </section>
   </main>
 </template>
 <script setup>
-import SliderPreviewOg from '~/components/SliderPreviewOg.vue';
+import SliderPreviewOg from "~/components/SliderPreviewOg.vue";
 
 const { metadata } = useMetadata();
 </script>
