@@ -2,13 +2,15 @@
 const currentYear = new Date().getFullYear();
 </script>
 <template>
-  <video autoplay muted loop class="inset-x-0 absolute z-1 w-full overflow-x-hidden scale-200 opacity-50" src="/assets/background.webm" />
-  <main class="h-full w-full relative z-2 flex flex-col gap-y-7">
-    <h2 class="text-5xl font-black text-center text-balance text-transparent bg-gradient-to-r from-white via-white to-transparent bg-clip-text">
-      Illuminate the Web:
-      <span class="bg-gradient-to-r from-purple-100 to-purple-500 bg-clip-text"> AI OpenGraphs </span>
-      that Redefine Connection</h2>
-    <PlaceUrlInput />
+  <video autoplay muted loop class="inset-x-0 bottom-1/4 absolute z-1 w-full overflow-x-hidden scale-200 opacity-50" src="/assets/background.webm" />
+  <main class="h-screen w-full relative z-2 flex items-center justify-center flex-col">
+    <div class="flex-grow flex flex-col items-center justify-center gap-y-7">
+      <h2 class="text-5xl font-black text-center text-balance text-transparent bg-gradient-to-r from-white via-white to-transparent bg-clip-text">
+        Illuminate the Web:
+        <span class="bg-gradient-to-r from-purple-100 to-purple-500 bg-clip-text"> AI OpenGraphs </span>
+        that Redefine Connection</h2>
+      <PlaceUrlInput />
+    </div>
+    <footer class="text-center flex-none pb-3 text-white/60">© {{currentYear}} Stealth Ltd. <span class="text-white/80 font-medium">No Rights Reserved.</span></footer>
   </main>
-  <footer class="text-center stick bottom-2">© {{currentYear}} Stealth Ltd. No Rights Reserved. </footer>
 </template>
