@@ -77,16 +77,27 @@ onMounted(() => {
 });
 
 const handleSubmit = async () => {
+	if (!url.value) {
+		return;
+	}
 	try {
-		const fetchedMetadata = await $fetch(
-			`/api/extract-metadata?url=${encodeURIComponent(url.value)}`,
-		);
-		setMetadata(fetchedMetadata);
-		if (metadata.value) {
-			router.push("/opengraph");
+		const response = await $fetch("/api/urls", {
+			method: "POST",
+			body: {
+				originalUrl: url.value,
+				isAnonymous: true,
+			},
+		});
+		if (response.body && response.body.shortUrl) {
+			const fetchedMetadata = await $fetch(
+				`/api/extract-metadata?url=${encodeURIComponent(url.value)}`,
+			);
+			setMetadata(fetchedMetadata);
+			if (metadata.value) {
+				router.push("/opengraph");
+			}
 		}
 	} catch (error) {
-		console.error("Error fetching metadata:", error);
 		setMetadata(null);
 	}
 };
