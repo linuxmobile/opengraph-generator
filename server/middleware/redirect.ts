@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
 	const supabase = serverSupabaseServiceRole(event);
 
-	const { data, error } = await supabase
+	const { data, error }: { data: any, error: any } = await supabase
 		.from("urls")
 		.select("original_url")
 		.eq("short_url", slug)
