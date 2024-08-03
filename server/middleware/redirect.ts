@@ -1,5 +1,4 @@
 import { serverSupabaseServiceRole } from "#supabase/server";
-import { defineEventHandler, sendRedirect, createError } from "h3";
 
 export default defineEventHandler(async (event) => {
 	const path = event.node.req.url || "";
@@ -11,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
 	const supabase = serverSupabaseServiceRole(event);
 
-	const { data, error }: { data: any, error: any } = await supabase
+	const { data, error } = await supabase
 		.from("urls")
 		.select("original_url")
 		.eq("short_url", slug)
