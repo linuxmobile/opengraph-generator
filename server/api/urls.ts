@@ -17,7 +17,7 @@ type Url = {
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
-	const { originalUrl, isAnonymous } = body;
+	let { originalUrl, isAnonymous } = body;
 
 	if (!originalUrl) {
 		return {
@@ -28,7 +28,14 @@ export default defineEventHandler(async (event) => {
 		};
 	}
 
-	const shortUrl = Math.random().toString(36).substring(2, 8);
+	// Normalize the URL
+	if (
+		!originalUrl.startsWith("http://") &&
+		!originalUrl.startsWith("https://")
+	) {
+		originalUrl = `https://${originalUrl}`;
+	}
+
 	const supabase = serverSupabaseServiceRole<Database>(event);
 
 	if (!supabase) {
@@ -40,6 +47,40 @@ export default defineEventHandler(async (event) => {
 			},
 		};
 	}
+
+	const { data: existingUrl, error: fetchError } = await supabase
+		.from("urls")
+		.select("*")
+		.eq("original_url", originalUrl)
+		.single();
+
+	if (fetchError && fetchError.code !== "PGRST116") {
+		console.error("Error fetching data from Supabase:", fetchError);
+		return {
+			status: 500,
+			body: {
+				error: "Failed to fetch URL data",
+				details: fetchError.message,
+			},
+		};
+	}
+
+	if (existingUrl) {
+		const baseUrl =
+			process.env.NODE_ENV === "development"
+				? "http://localhost:3000"
+				: config.baseUrl;
+
+		return {
+			statusCode: 200,
+			body: {
+				shortUrl: `${baseUrl}/${existingUrl.short_url}`,
+				originalUrl,
+			},
+		};
+	}
+
+	const shortUrl = Math.random().toString(36).substring(2, 8);
 
 	const urlData: Url = {
 		id: Date.now(),
