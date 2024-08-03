@@ -6,6 +6,10 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		baseUrl: process.env.BASE_URL || "http://localhost:3000",
 		apiKey: process.env.GOOGLE,
+		cloudinaryUrl: import.meta.env.CLOUDINARY_URL,
+		cloudinaryCloudName: import.meta.env.CLOUDINARY_CLOUD_NAME,
+		cloudinaryApiKey: import.meta.env.CLOUDINARY_API_KEY,
+		cloudinaryApiSecret: import.meta.env.CLOUDINARY_API_SECRET,
 	},
 	supabase: {
 		url: process.env.SUPABASE_URL,
