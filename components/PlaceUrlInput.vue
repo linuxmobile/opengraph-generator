@@ -91,12 +91,29 @@ const handleSubmit = async () => {
 			const fetchedMetadata = await $fetch(
 				`/api/extract-metadata?url=${encodeURIComponent(url.value)}`,
 			);
-			setMetadata(fetchedMetadata);
-			if (metadata.value) {
-				router.push("/opengraph");
+			if (fetchedMetadata) {
+				setMetadata(fetchedMetadata);
+				if (metadata.value) {
+					const { title, description, author, keywords, headings } =
+						metadata.value;
+					const filteredMetadata = {
+						title,
+						description,
+						author,
+						keywords,
+						headings,
+					};
+					const { generatedTitle, generatedDescription } =
+						await useGenerateAI(filteredMetadata);
+					router.push("/opengraph");
+				}
+			} else {
+				console.error("Fetched metadata is null or undefined");
+				setMetadata(null);
 			}
 		}
 	} catch (error) {
+		console.error("Error in handleSubmit:", error);
 		setMetadata(null);
 	}
 };

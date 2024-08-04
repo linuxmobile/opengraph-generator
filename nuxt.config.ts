@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 
 	runtimeConfig: {
 		baseUrl: process.env.BASE_URL || "http://localhost:3000",
-		apiKey: process.env.GOOGLE,
+		apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
 		cloudinaryUrl: import.meta.env.CLOUDINARY_URL,
 		cloudinaryCloudName: import.meta.env.CLOUDINARY_CLOUD_NAME,
 		cloudinaryApiKey: import.meta.env.CLOUDINARY_API_KEY,
