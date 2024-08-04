@@ -26,6 +26,7 @@ import { ArrowRight, Sparkles } from "lucide-vue-next";
 const url = ref("");
 const router = useRouter();
 const { setMetadata, metadata } = useMetadata();
+const { start, finish } = useLoadingIndicator();
 
 const placeholder = ref("");
 const placeholderURLs = [
@@ -79,6 +80,7 @@ const handleSubmit = async () => {
 	if (!url.value) {
 		return;
 	}
+	start();
 	try {
 		const response = await $fetch("/api/urls", {
 			method: "POST",
@@ -115,6 +117,8 @@ const handleSubmit = async () => {
 	} catch (error) {
 		console.error("Error in handleSubmit:", error);
 		setMetadata(null);
+	} finally {
+		finish();
 	}
 };
 </script>
