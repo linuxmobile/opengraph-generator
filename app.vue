@@ -1,8 +1,9 @@
 <template>
-  <NuxtLoadingIndicator />
+  <AILoadingIndicator />
   <NuxtPage/>
 </template>
 <script setup lang="ts">
+import AILoadingIndicator from "~/components/nuxt-loading-indicator";
 useHead({
 	bodyAttrs: {
 		class:

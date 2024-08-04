@@ -6,19 +6,19 @@ const currentYear = new Date().getFullYear();
   <video autoplay muted loop class="inset-x-0 bottom-1/4 absolute z-1 w-full overflow-x-hidden scale-200 opacity-50" src="/assets/background.webm" />
   <main class="h-screen w-full relative z-2 flex items-center justify-center flex-col">
     <div class="flex-grow flex flex-col items-center justify-center gap-y-8">
-      <div class="relative">
+      <div class="relative tracking-1">
         <div class="absolute z-1 blur-lg opacity-60">
           <Sparkle class="size-7"/>
-          <p class="font-boska text-9xl font-black">Okai!</p>
+          <p class="font-boska text-9xl font-black"><span class="text-transparent bg-gradient-to-r from-[#ff0f7b] to-[#f89b29] bg-clip-text">Ok</span>ai!</p>
         </div>
         <div class="relative z-2">
           <Sparkle class="size-7"/>
-          <h1 class="font-boska text-9xl font-black">Okai!</h1>
+          <h1 class="font-boska text-9xl font-black"><span class="text-transparent bg-gradient-to-r from-[#ff0f7b] to-[#f89b29] bg-clip-text">Ok</span>ai!</h1>
         </div>
       </div>
       <h2 class="text-5xl font-bold text-center text-balance text-transparent bg-gradient-to-r from-white via-white to-transparent bg-clip-text">
         Illuminate the Web:
-        <span class="bg-gradient-to-r from-purple-100 to-purple-500 bg-clip-text"> AI OpenGraphs </span>
+        AI OpenGraphs
         that Redefine Connection</h2>
       <PlaceUrlInput />
     </div>
