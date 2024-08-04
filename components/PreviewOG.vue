@@ -1,5 +1,6 @@
 <template>
   <section
+    ref="previewSection"
     class="w-full h-full flex flex-col rounded-3xl bg-cover bg-center"
     :style="{ backgroundImage: currentGradient ? `url(${currentGradient.gradient})` : '' }">
     <div class="px-5 flex flex-col justify-center h-full">
@@ -22,7 +23,7 @@ const props = defineProps({
 });
 
 const { gradients } = useGradients();
-const { opengraphID } = useOpengraph();
+const { opengraphID, generateImage } = useOpengraph();
 
 const findStyleById = (id) => {
 	return styles.find((style) => style.id === id) || {};
@@ -34,4 +35,12 @@ const findGradientById = (id) => {
 
 const currentStyle = computed(() => findStyleById(opengraphID.value));
 const currentGradient = computed(() => findGradientById(opengraphID.value));
+
+const previewSection = ref(null);
+
+onMounted(async () => {
+	if (previewSection.value) {
+		await generateImage(previewSection.value);
+	}
+});
 </script>
