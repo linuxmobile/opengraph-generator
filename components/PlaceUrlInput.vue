@@ -1,6 +1,6 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="flex items-center justify-center">
-    <div class="relative flex items-center justify-center">
+  <form @submit.prevent="handleSubmit" class="w-full flex items-center justify-center">
+    <div class="relative flex items-center justify-center w-full max-w-md">
       <input
         type="text"
         v-model="url"
@@ -13,8 +13,7 @@
         class="absolute top-1/2 right-3 -translate-y-1/2 flex items-center justify-center
           px-4 py-1 text-gray-400 bg-black/10 border-1 border-gray-500/40 rounded-full p-0
           hover:bg-gradient-to-t hover:from-black/20 hover:to-transparent bg-gradient-to-t
-          from-black/5 to-transparent
-        ">
+          from-black/5 to-transparent">
         <p class="font-semibold text-white/80 mb-0.3">Generate</p>
         <ArrowRight />
       </button>
