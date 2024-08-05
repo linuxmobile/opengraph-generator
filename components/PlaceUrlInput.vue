@@ -20,6 +20,7 @@
     </div>
   </form>
 </template>
+
 <script setup>
 import { ArrowRight, Sparkles } from "lucide-vue-next";
 
@@ -80,16 +81,25 @@ const handleSubmit = async () => {
 	if (!url.value) {
 		return;
 	}
+	let normalizedUrl = url.value;
+	if (
+		!normalizedUrl.startsWith("http://") &&
+		!normalizedUrl.startsWith("https://")
+	) {
+		normalizedUrl = `https://${normalizedUrl}`;
+	}
 	start();
 	try {
-		const response = await $fetch("/api/urls", {
+		const urlResponse = await $fetch("/api/urls", {
 			method: "POST",
 			body: {
-				originalUrl: url.value,
+				originalUrl: normalizedUrl,
 				isAnonymous: true,
 			},
 		});
-		if (response.body && response.body.shortUrl) {
+
+		if (urlResponse.body && urlResponse.body.shortUrl) {
+			const shortUrl = urlResponse.body.shortUrl;
 			const fetchedMetadata = await $fetch(
 				`/api/extract-metadata?url=${encodeURIComponent(url.value)}`,
 			);
@@ -105,8 +115,44 @@ const handleSubmit = async () => {
 						keywords,
 						headings,
 					};
-					const { generatedTitle, generatedDescription } =
-						await useGenerateAI(filteredMetadata);
+
+					const urlExists = await $fetch(
+						`/api/urls?originalUrl=${encodeURIComponent(normalizedUrl)}`,
+						{ method: "GET" },
+					);
+
+					if (urlExists) {
+						const existingOGData = await $fetch(
+							`/api/opengraph_images?originalUrl=${encodeURIComponent(normalizedUrl)}`,
+						);
+
+						let generatedTitle, generatedDescription;
+
+						if (
+							existingOGData.body &&
+							existingOGData.body.title &&
+							existingOGData.body.description
+						) {
+							generatedTitle = existingOGData.body.title;
+							generatedDescription = existingOGData.body.description;
+						} else {
+							const generatedData = await useGenerateAI(filteredMetadata);
+							generatedTitle = generatedData.generatedTitle;
+							generatedDescription = generatedData.generatedDescription;
+
+							await $fetch("/api/opengraph_images", {
+								method: "POST",
+								body: {
+									title: generatedTitle,
+									description: generatedDescription,
+									shortUrl: shortUrl,
+									originalUrl: normalizedUrl,
+								},
+							});
+						}
+					} else {
+						console.error("El originalUrl no existe en la tabla referenciada");
+					}
 					router.push("/opengraph");
 				}
 			} else {
