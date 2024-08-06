@@ -1,5 +1,7 @@
 <template>
   <main class="relative h-screen w-full flex flex-col-reverse p-5">
+    <MetadataOptions v-show="isOptionsPanelOpen" :title="metadata.title" :description="metadata.description"
+      @metadata-update="updateMetadata" @toggle-menu="toggleMenu" />
     <SliderPreviewOg
     :title="metadata.title"
     :description="metadata.description"
@@ -18,7 +20,17 @@
 <script setup>
 import SliderPreviewOg from "~/components/SliderPreviewOg.vue";
 
-const { metadata } = useMetadata();
+const { metadata, setMetadata } = useMetadata();
+
+function updateMetadata(metadata) {
+  setMetadata(metadata)
+}
+
+const isOptionsPanelOpen = ref(false)
+
+function toggleMenu(v) {
+  isOptionsPanelOpen.value = v
+}
 
 const absoluteFaviconUrl = computed(() => {
 	if (!metadata.value.favicon) return null;
