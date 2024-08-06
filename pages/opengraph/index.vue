@@ -23,7 +23,7 @@
       :url="metadata.url"
       :svg="absoluteFaviconUrl"
       :selectedId="selectedId"
-      :className="'!max-w-full'"
+      :className="'!max-w-full !pointer-events-none'"
       @updateSelectedId="updateSelectedId"
       @toggleOptionsPanel="toggleOptionsPanel"
     />
