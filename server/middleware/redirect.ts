@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
 	const supabase = serverSupabaseServiceRole(event);
 
-	const { data, error }: { data: any, error: any } = await supabase
+	const { data, error }: { data: any; error: any } = await supabase
 		.from("urls")
 		.select("original_url")
 		.eq("short_url", slug)
@@ -21,6 +21,17 @@ export default defineEventHandler(async (event) => {
 			statusCode: 404,
 			statusMessage: "URL not found",
 		});
+	}
+
+	const userAgent = event.node.req.headers["user-agent"] || "";
+
+	const isCrawler =
+		/facebookexternalhit|Twitterbot|Pinterest|Googlebot|Bingbot|LinkedInBot|Slackbot|WhatsApp/.test(
+			userAgent,
+		);
+
+	if (isCrawler) {
+		return;
 	}
 
 	const originalUrl = data.original_url.startsWith("http")
