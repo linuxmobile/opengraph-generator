@@ -13,6 +13,8 @@
       :author="metadata.author"
       :url="metadata.url"
       :svg="absoluteFaviconUrl"
+      :selectedId="selectedId"
+      @updateSelectedId="updateSelectedId"
     />
     <PreviewOG
       :title="metadata.title"
@@ -20,8 +22,10 @@
       :author="metadata.author"
       :url="metadata.url"
       :svg="absoluteFaviconUrl"
-      :isOptionsPanelOpen="isOptionsPanelOpen"
-      @toggleMenu="toggleMenu"
+      :selectedId="selectedId"
+      :className="'!max-w-full'"
+      @updateSelectedId="updateSelectedId"
+      @toggleOptionsPanel="toggleOptionsPanel"
     />
     <div class="w-full flex items-center justify-between">
       <Logo class="flex items-center w-full justify-start pb-3" :text="'!text-6xl'" :icon="'!size-4.5'" />
@@ -35,6 +39,7 @@
 
 <script setup>
 import Github from "~/assets/Github.vue";
+
 const { metadata, setMetadata } = useMetadata();
 
 function updateMetadata(metadata) {
@@ -42,9 +47,18 @@ function updateMetadata(metadata) {
 }
 
 const isOptionsPanelOpen = ref(false);
+const selectedId = ref(1);
 
 function toggleMenu(v) {
 	isOptionsPanelOpen.value = v;
+}
+
+function updateSelectedId(id) {
+	selectedId.value = id;
+}
+
+function toggleOptionsPanel() {
+	isOptionsPanelOpen.value = !isOptionsPanelOpen.value;
 }
 
 const absoluteFaviconUrl = computed(() => {
