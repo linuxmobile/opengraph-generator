@@ -2,40 +2,34 @@
   <p>Redirigiendo...</p>
 </template>
 <script setup>
-import { serverSupabaseServiceRole } from "#supabase/server";
-
 const route = useRoute();
 const slug = route.params.slug;
 
 const { data, error } = await useAsyncData("fetchUrl", async () => {
-	const supabase = serverSupabaseServiceRole();
-	const { data, error } = await supabase
-		.from("opengraph_images")
-		.select("original_url, og_image_url, title, description")
-		.eq("short_url", slug)
-		.single();
-	if (error || !data) {
+	const response = await fetch(`/api/opengraph_images?shortUrl=${slug}`);
+	if (!response.ok) {
 		throw createError({
-			statusCode: 404,
+			statusCode: response.status,
 			message: "Not found",
 		});
 	}
-
-	return data;
+	return await response.json();
 });
 
-useHead({
-	title: data.value.title,
-	meta: [
-		{ name: "description", content: data.value.description },
-		{ property: "og:title", content: data.value.title },
-		{ property: "og:description", content: data.value.description },
-		{ property: "og:image", content: data.value.og_image_url },
-		{ property: "og:url", content: data.value.original_url },
-	],
-});
+if (data.value) {
+	useHead({
+		title: data.value.title,
+		meta: [
+			{ name: "description", content: data.value.description },
+			{ property: "og:title", content: data.value.title },
+			{ property: "og:description", content: data.value.description },
+			{ property: "og:image", content: data.value.og_image_url },
+			{ property: "og:url", content: data.value.original_url },
+		],
+	});
 
-setTimeout(() => {
-	window.location.href = data.value.original_url;
-}, 1000);
+	setTimeout(() => {
+		window.location.href = data.value.original_url;
+	}, 1000);
+}
 </script>

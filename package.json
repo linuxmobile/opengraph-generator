@@ -17,6 +17,7 @@
     "@unocss/nuxt": "^0.61.9",
     "ai": "^3.2.43",
     "cheerio": "^1.0.0-rc.12",
+    "cloudinary": "^2.4.0",
     "html-to-image": "^1.11.11",
     "nuxt": "^3.12.4",
     "nuxt-lucide-icons": "^1.0.5",

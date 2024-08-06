@@ -8,7 +8,10 @@
         @toggle-menu="toggleMenu"
       />
       <div class="w-full flex items-center justify-between gap-x-5">
-        <button class="w-full rounded-lg py-2 bg-white/5">Generate Shareable Link</button>
+        <button
+          class="w-full rounded-lg py-2 bg-white/5"
+          @click="generateShareableLink"
+        >Generate Shareable Link</button>
         <button class="w-full rounded-lg py-2 bg-white/5">Edit</button>
       </div>
       <SliderPreviewOg
@@ -46,6 +49,7 @@
 import Github from "~/assets/Github.vue";
 
 const { metadata, setMetadata } = useMetadata();
+const { ogImageUrl } = useOpengraph();
 
 function updateMetadata(newMetadata) {
 	setMetadata({
@@ -81,4 +85,41 @@ const absoluteFaviconUrl = computed(() => {
 		? metadata.value.favicon
 		: `${baseUrl}/${faviconPath}`;
 });
+
+async function generateShareableLink() {
+	try {
+		const image = ogImageUrl.value;
+		if (!image) {
+			return;
+		}
+
+		const base64Image = await convertBlobToBase64(image);
+
+		const data = await $fetch("/api/upload", {
+			method: "POST",
+			body: { image: base64Image },
+		});
+
+		if (data && data.imageUrl) {
+			const imageUrl = data.imageUrl;
+			console.log("Image uploaded successfully:", imageUrl);
+		} else {
+			throw new Error("Image URL not found in response");
+		}
+	} catch (error) {
+		console.error("Error generating shareable link:", error);
+		alert("Failed to generate shareable link");
+	}
+}
+
+async function convertBlobToBase64(blobUrl) {
+	const response = await fetch(blobUrl);
+	const blob = await response.blob();
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(blob);
+		reader.onloadend = () => resolve(reader.result);
+		reader.onerror = (error) => reject(error);
+	});
+}
 </script>
