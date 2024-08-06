@@ -1,13 +1,23 @@
 <template>
-  <section
-    ref="previewSection"
-    class="w-full h-full flex flex-col rounded-3xl bg-cover bg-center"
+  <section ref="previewSection"
+    class="w-full h-full flex flex-col rounded-3xl bg-cover bg-center relative overflow-hidden"
     :style="{ backgroundImage: currentGradient ? `url(${currentGradient.gradient})` : '' }">
     <div class="px-5 flex flex-col justify-center h-full">
       <h1 :class="currentStyle?.title">{{ props.title }}</h1>
       <p :class="currentStyle?.description">{{ props.description }}</p>
-      <p v-if="props.author" :class="currentStyle?.author">{{ props.author }}</p >
+      <p v-if="props.author" :class="currentStyle?.author">{{ props.author }}</p>
       <p :class="currentStyle?.url">{{ props.url }}</p>
+    </div>
+
+    <div class="w-full absolute text-slate-300 bottom-0 p-4 rounded-b-3xl flex justify-end">
+      <button @click="toggleOptionsPanel">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      </button>
     </div>
   </section>
 </template>
@@ -16,21 +26,23 @@
 import styles from "~/assets/styles.json";
 
 const props = defineProps({
-	title: String,
-	description: String,
-	author: String,
-	url: String,
+  title: String,
+  description: String,
+  author: String,
+  url: String,
+  isOptionsPanelOpen: Boolean,
 });
 
+const emit = defineEmits(['toggleMenu']);
 const { gradients } = useGradients();
 const { opengraphID, generateImage } = useOpengraph();
 
 const findStyleById = (id) => {
-	return styles.find((style) => style.id === id) || {};
+  return styles.find((style) => style.id === id) || {};
 };
 
 const findGradientById = (id) => {
-	return gradients.value.find((gradient) => gradient.id === id) || {};
+  return gradients.value.find((gradient) => gradient.id === id) || {};
 };
 
 const currentStyle = computed(() => findStyleById(opengraphID.value));
@@ -39,8 +51,16 @@ const currentGradient = computed(() => findGradientById(opengraphID.value));
 const previewSection = ref(null);
 
 onMounted(async () => {
-	if (previewSection.value) {
-		await generateImage(previewSection.value);
-	}
+  if (previewSection.value) {
+    await generateImage(previewSection.value);
+  }
+});
+
+const toggleOptionsPanel = () => {
+  emit('toggleMenu', !props.isOptionsPanelOpen);
+};
+
+const buttonText = computed(() => {
+  return props.isOptionsPanelOpen ? 'Close' : 'Open';
 });
 </script>
