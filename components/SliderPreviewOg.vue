@@ -1,14 +1,16 @@
 <template>
-  <OpengraphPreview
-    :title="title"
-    :description="description"
-    :author="author"
-    :url="url"
-    :svg="svg"
-    :selectedId="selectedId"
-    :isSlider="true"
-    @updateSelectedId="updateSelectedId"
-  />
+  <div class="min-h-50% md:min-h-72">
+    <OpengraphPreview
+      :title="title"
+      :description="description"
+      :author="author"
+      :url="url"
+      :svg="svg"
+      :selectedId="selectedId"
+      :isSlider="true"
+      @updateSelectedId="updateSelectedId"
+    />
+  </div>
 </template>
 
 <script setup>

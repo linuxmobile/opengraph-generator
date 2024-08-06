@@ -1,35 +1,37 @@
 <template>
   <main class="relative h-screen w-full flex flex-col-reverse p-5 overflow-auto">
-    <MetadataOptions
-      v-show="isOptionsPanelOpen"
-      v-bind="metadata"
-      @metadata-update="updateMetadata"
-      @toggle-menu="toggleMenu"
-    />
-    <SliderPreviewOg
-      :title="metadata.title"
-      :description="metadata.description"
-      :author="metadata.author"
-      :url="metadata.url"
-      :svg="absoluteFaviconUrl"
-      :selectedId="selectedId"
-      @updateSelectedId="updateSelectedId"
-    />
-    <PreviewOG
-      :title="metadata.title"
-      :description="metadata.description"
-      :author="metadata.author"
-      :url="metadata.url"
-      :svg="absoluteFaviconUrl"
-      :selectedId="selectedId"
-      :className="'!max-w-full !pointer-events-none'"
-      @updateSelectedId="updateSelectedId"
-      @toggleOptionsPanel="toggleOptionsPanel"
-    />
+    <div class="relative h-screen w-full flex flex-col-reverse p-5 overflow-auto md:flex-col">
+      <MetadataOptions
+        v-show="isOptionsPanelOpen"
+        v-bind="metadata"
+        @metadata-update="updateMetadata"
+        @toggle-menu="toggleMenu"
+      />
+      <SliderPreviewOg
+        :title="metadata.title"
+        :description="metadata.description"
+        :author="metadata.author"
+        :url="metadata.url"
+        :svg="absoluteFaviconUrl"
+        :selectedId="selectedId"
+        @updateSelectedId="updateSelectedId"
+      />
+      <PreviewOG
+        :title="metadata.title"
+        :description="metadata.description"
+        :author="metadata.author"
+        :url="metadata.url"
+        :svg="absoluteFaviconUrl"
+        :selectedId="selectedId"
+        @updateSelectedId="updateSelectedId"
+        @toggleOptionsPanel="toggleOptionsPanel"
+      />
+    </div>
     <div class="w-full flex items-center justify-between">
       <Logo class="flex items-center w-full justify-start pb-3" :text="'!text-6xl'" :icon="'!size-4.5'" />
       <NuxtLink target="_blank" :href="'https://github.com/linuxmobile/opengraph-generator'"
-        class="bg-white/5 backdrop-blur-md p-2 rounded-lg mt-4">
+        class="rounded-full p-2 bg-white/10 flex gap-x-2 group">
+        <p class="group-hover:block hidden pr-1 text-nowrap">Give a Star!</p>
         <Github class="size-6"/>
       </NuxtLink>
     </div>
