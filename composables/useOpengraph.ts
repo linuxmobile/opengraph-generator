@@ -15,9 +15,11 @@ export const useOpengraph = () => {
 	): Promise<string | null> => {
 		try {
 			const svgDataUrl = await toSvg(element);
-			const img = new Image();
-			img.src = svgDataUrl;
-			return svgDataUrl;
+			const response = await fetch(svgDataUrl);
+			const blob = await response.blob();
+			const blobUrl = URL.createObjectURL(blob);
+			ogImageUrl.value = blobUrl;
+			return blobUrl;
 		} catch (error: any) {
 			console.error("Error generating image", error.message);
 			return null;

@@ -1,14 +1,6 @@
 <template>
-  <section
-    class="w-full h-full flex flex-col rounded-3xl bg-cover bg-center relative overflow-hidden"
-    :style="{ backgroundImage: currentGradient ? `url(${currentGradient.gradient})` : '' }">
-    <div class="px-5 flex flex-col justify-center h-full">
-      <h1 :class="currentStyle?.title">{{ props.title }}</h1>
-      <p :class="currentStyle?.description">{{ props.description }}</p>
-      <p v-if="props.author" :class="currentStyle?.author">{{ props.author }}</p>
-      <p :class="currentStyle?.url">{{ props.url }}</p>
-    </div>
-
+  <!-- <section v-if="ogImageUrl" class="w-full max-w-full relative">
+    <img :src="ogImageUrl" alt="Generated Image" />
     <div class="w-full absolute text-slate-300 bottom-0 p-4 rounded-b-3xl flex justify-end">
       <button @click="toggleOptionsPanel">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -19,11 +11,21 @@
         </svg>
       </button>
     </div>
-  </section>
+  </section> -->
+  <SliderPreviewOg
+    v-if="opengraphID"
+    :title="title"
+    :description="description"
+    :author="author"
+    :url="url"
+    :svg="svg"
+    :selectedId="opengraphID"
+  />
 </template>
 
 <script setup>
 import styles from "~/assets/styles.json";
+import SliderPreviewOg from "./SliderPreviewOg.vue"; // Importa el componente
 
 const props = defineProps({
 	title: String,
@@ -31,11 +33,12 @@ const props = defineProps({
 	author: String,
 	url: String,
 	isOptionsPanelOpen: Boolean,
+	svg: String,
 });
 
 const emit = defineEmits(["toggleMenu"]);
 const { gradients } = useGradients();
-const { opengraphID, generateImage } = useOpengraph();
+const { opengraphID, generateImage, ogImageUrl } = useOpengraph();
 
 const findStyleById = (id) => {
 	return styles.find((style) => style.id === id) || {};
@@ -48,13 +51,15 @@ const findGradientById = (id) => {
 const currentStyle = computed(() => findStyleById(opengraphID.value));
 const currentGradient = computed(() => findGradientById(opengraphID.value));
 
-const previewSection = ref(null);
-
 const toggleOptionsPanel = () => {
 	emit("toggleMenu", !props.isOptionsPanelOpen);
 };
 
-const buttonText = computed(() => {
-	return props.isOptionsPanelOpen ? "Close" : "Open";
+const element = (ref < HTMLElement) | (null > null);
+
+onMounted(async () => {
+	if (element.value) {
+		await generateImage(element.value);
+	}
 });
 </script>

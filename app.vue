@@ -7,7 +7,7 @@ import AILoadingIndicator from "~/components/nuxt-loading-indicator";
 useHead({
 	bodyAttrs: {
 		class:
-			"bg-slate-950 text-white font-sans antialiased min-h-screen [&>div]:h-full relative overflow-hidden",
+			"bg-slate-950 text-white font-sans antialiased min-h-screen [&>div]:h-full relative overflow-x-hidden",
 	},
 });
 </script>
