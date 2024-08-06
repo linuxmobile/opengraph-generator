@@ -1,32 +1,36 @@
 <script lang="ts" setup>
 interface Props {
-  title: string;
-  description: string;
+	title: string;
+	description: string;
 }
 
-const props = defineProps<Props>()
-const emit = defineEmits(["metadataUpdate", "toggleMenu"])
-const { fetchGradients, gradients } = useGradients()
-const { setOpengraphID } = useOpengraph()
+const props = defineProps<Props>();
+const emit = defineEmits(["metadataUpdate", "toggleMenu"]);
+const { fetchGradients, gradients } = useGradients();
+const { setOpengraphID } = useOpengraph();
 
 onMounted(() => {
-  /**
-    * Fetch new gradients only if none exist.
-    * This prevents fetching new gradients every time the options panel opens.
-    */
-  if (!gradients.value.length) {
-    fetchGradients(8);
-  }
-})
+	/**
+	 * Fetch new gradients only if none exist.
+	 * This prevents fetching new gradients every time the options panel opens.
+	 */
+	if (!gradients.value.length) {
+		fetchGradients(8);
+	}
+});
 
 const data = ref({
-  title: props.title,
-  description: props.description,
-})
+	title: props.title,
+	description: props.description,
+});
 
-watch(data, (newMetadata) => {
-  emit("metadataUpdate", newMetadata)
-}, { deep: true })
+watch(
+	data,
+	(newMetadata) => {
+		emit("metadataUpdate", newMetadata);
+	},
+	{ deep: true },
+);
 </script>
 
 <template>
@@ -71,5 +75,3 @@ watch(data, (newMetadata) => {
     </div>
   </dialog>
 </template>
-
-<style scoped></style>

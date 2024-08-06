@@ -4,10 +4,10 @@
       <div
         ref="firstSliderItem"
         @click="handleOpengraph(gradient.id)"
-        v-for="(gradient, index) in gradientsWithStyles"
+        v-for="(gradient, index) in gradientsWithStyles.slice(0,3)"
         :key="gradient.id"
         :style="{ backgroundImage: `url(${gradient.gradient})` }"
-        class="relative rounded-3xl aspect-video w-max-content h-full p-3
+        class="relative rounded-3xl aspect-video h-full p-3
           select-none flex flex-col items-center justify-center gap-y-2
           cursor-pointer bg-cover bg-center snap-center">
         <div class="text-white">

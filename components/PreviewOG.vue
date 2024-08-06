@@ -1,5 +1,5 @@
 <template>
-  <section ref="previewSection"
+  <section
     class="w-full h-full flex flex-col rounded-3xl bg-cover bg-center relative overflow-hidden"
     :style="{ backgroundImage: currentGradient ? `url(${currentGradient.gradient})` : '' }">
     <div class="px-5 flex flex-col justify-center h-full">
@@ -26,23 +26,23 @@
 import styles from "~/assets/styles.json";
 
 const props = defineProps({
-  title: String,
-  description: String,
-  author: String,
-  url: String,
-  isOptionsPanelOpen: Boolean,
+	title: String,
+	description: String,
+	author: String,
+	url: String,
+	isOptionsPanelOpen: Boolean,
 });
 
-const emit = defineEmits(['toggleMenu']);
+const emit = defineEmits(["toggleMenu"]);
 const { gradients } = useGradients();
 const { opengraphID, generateImage } = useOpengraph();
 
 const findStyleById = (id) => {
-  return styles.find((style) => style.id === id) || {};
+	return styles.find((style) => style.id === id) || {};
 };
 
 const findGradientById = (id) => {
-  return gradients.value.find((gradient) => gradient.id === id) || {};
+	return gradients.value.find((gradient) => gradient.id === id) || {};
 };
 
 const currentStyle = computed(() => findStyleById(opengraphID.value));
@@ -50,17 +50,11 @@ const currentGradient = computed(() => findGradientById(opengraphID.value));
 
 const previewSection = ref(null);
 
-onMounted(async () => {
-  if (previewSection.value) {
-    await generateImage(previewSection.value);
-  }
-});
-
 const toggleOptionsPanel = () => {
-  emit('toggleMenu', !props.isOptionsPanelOpen);
+	emit("toggleMenu", !props.isOptionsPanelOpen);
 };
 
 const buttonText = computed(() => {
-  return props.isOptionsPanelOpen ? 'Close' : 'Open';
+	return props.isOptionsPanelOpen ? "Close" : "Open";
 });
 </script>
