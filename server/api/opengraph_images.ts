@@ -1,5 +1,4 @@
 import { serverSupabaseServiceRole } from "#supabase/server";
-const config = useRuntimeConfig();
 
 interface Database {
 	public: {
