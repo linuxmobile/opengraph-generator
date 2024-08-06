@@ -16,20 +16,24 @@ const { data, error } = await useAsyncData("fetchUrl", async () => {
 	return await response.json();
 });
 
-if (data.value) {
-	useHead({
-		title: data.value.title,
-		meta: [
-			{ name: "description", content: data.value.description },
-			{ property: "og:title", content: data.value.title },
-			{ property: "og:description", content: data.value.description },
-			{ property: "og:image", content: data.value.og_image_url },
-			{ property: "og:url", content: data.value.original_url },
-		],
+if (data.value && data.value.body) {
+	const { title, description, og_image_url, original_url } = data.value.body;
+
+	useSeoMeta({
+		title,
+		description,
+		ogTitle: title,
+		ogDescription: description,
+		ogImage: og_image_url,
+		ogUrl: original_url,
+		twitterTitle: title,
+		twitterDescription: description,
+		twitterImage: og_image_url,
+		twitterCard: "summary",
 	});
 
 	setTimeout(() => {
-		window.location.href = data.value.original_url;
+		location.href = original_url;
 	}, 1000);
 }
 </script>
