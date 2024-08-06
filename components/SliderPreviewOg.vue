@@ -59,7 +59,6 @@ onMounted(async () => {
 
 watch(firstSliderItem, async (newVal) => {
 	if (Array.isArray(newVal) && newVal.length > 0) {
-		console.log("FirstSliderItem:", newVal);
 		await nextTick();
 		const firstElement = newVal[0];
 		if (firstElement instanceof HTMLElement) {

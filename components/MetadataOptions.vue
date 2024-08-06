@@ -5,13 +5,13 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const emit = defineEmits(["metadataUpdate"])
+const emit = defineEmits(["metadataUpdate", "toggleMenu"])
 const { fetchGradients, gradients } = useGradients()
 const { setOpengraphID } = useOpengraph()
 
 onMounted(() => {
-  /** 
-    * Fetch new gradients only if none exist. 
+  /**
+    * Fetch new gradients only if none exist.
     * This prevents fetching new gradients every time the options panel opens.
     */
   if (!gradients.value.length) {

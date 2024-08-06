@@ -35,7 +35,7 @@ const props = defineProps({
 
 const emit = defineEmits(['toggleMenu']);
 const { gradients } = useGradients();
-const { opengraphID } = useOpengraph();
+const { opengraphID, generateImage } = useOpengraph();
 
 const findStyleById = (id) => {
   return styles.find((style) => style.id === id) || {};
