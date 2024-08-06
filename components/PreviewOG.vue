@@ -28,8 +28,7 @@
 import Sparkle from "~/assets/Sparkle.vue";
 import { Settings } from "lucide-vue-next";
 
-const { setMetadata } = useMetadata();
-const url = ref("");
+const { setMetadata, metadata } = useMetadata();
 
 const props = defineProps({
 	title: String,
@@ -79,7 +78,7 @@ async function fetchMetadata() {
 			return;
 		}
 
-		setMetadata({ title, description });
+		setMetadata({ ...metadata.value, title, description });
 		emit("metadataUpdate", { title, description });
 	} catch (error) {
 		console.log("Error fetching metadata", error);

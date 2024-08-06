@@ -24,6 +24,15 @@ const data = ref({
 	description: props.description,
 });
 
+// Watch for changes in props and update data accordingly
+watch(
+	() => props,
+	(newProps) => {
+		data.value = { ...newProps };
+	},
+	{ deep: true },
+);
+
 watch(
 	data,
 	(newMetadata) => {

@@ -2,8 +2,7 @@
   <main class="relative h-screen w-full flex flex-col-reverse p-5 overflow-auto">
     <MetadataOptions
       v-show="isOptionsPanelOpen"
-      :title="metadata.title"
-      :description="metadata.description"
+      v-bind="metadata"
       @metadata-update="updateMetadata"
       @toggle-menu="toggleMenu"
     />
@@ -42,8 +41,11 @@ import Github from "~/assets/Github.vue";
 
 const { metadata, setMetadata } = useMetadata();
 
-function updateMetadata(metadata) {
-	setMetadata(metadata);
+function updateMetadata(newMetadata) {
+	setMetadata({
+		...metadata.value,
+		...newMetadata,
+	});
 }
 
 const isOptionsPanelOpen = ref(false);
