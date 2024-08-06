@@ -1,5 +1,4 @@
-import { toJpeg, toSvg } from "html-to-image";
-import { useGlobalGenericState } from "~/utils/useGlobalGenericState";
+import { toSvg } from "html-to-image";
 
 export const useOpengraph = () => {
 	const [opengraphID, setOpengraphID] = useGlobalGenericState<number>(
@@ -11,30 +10,25 @@ export const useOpengraph = () => {
 		null,
 	);
 
-	const generateImage = async (element: HTMLElement) => {
+	const generateImage = async (
+		element: HTMLElement,
+	): Promise<string | null> => {
 		try {
 			const svgDataUrl = await toSvg(element);
 			const img = new Image();
 			img.src = svgDataUrl;
-
-			img.onload = () => {
-				const canvas = document.createElement("canvas");
-				const context = canvas.getContext("2d");
-
-				if (!context) {
-					throw new Error("No se pudo obtener el contexto 2D del canvas");
-				}
-
-				canvas.width = 1200;
-				canvas.height = 630;
-				context.drawImage(img, 0, 0, 1200, 630);
-				const pngDataUrl = canvas.toDataURL("image/png");
-				setOgImageUrl(pngDataUrl);
-			};
+			return svgDataUrl;
 		} catch (error: any) {
 			console.error("Error generating image", error.message);
+			return null;
 		}
 	};
 
-	return { opengraphID, setOpengraphID, ogImageUrl, generateImage };
+	return {
+		opengraphID,
+		setOpengraphID,
+		ogImageUrl,
+		setOgImageUrl,
+		generateImage,
+	};
 };

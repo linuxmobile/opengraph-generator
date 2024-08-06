@@ -55,9 +55,21 @@ const firstSliderItem = ref(null);
 
 onMounted(async () => {
 	fetchGradients(3);
-	if (firstSliderItem.value) {
-    console.log("firstSliderItem", firstSliderItem.value);
-		await generateImage(firstSliderItem.value);
+});
+
+watch(firstSliderItem, async (newVal) => {
+	if (Array.isArray(newVal) && newVal.length > 0) {
+		console.log("FirstSliderItem:", newVal);
+		await nextTick();
+		const firstElement = newVal[0];
+		if (firstElement instanceof HTMLElement) {
+			const result = await generateImage(firstElement);
+			return result;
+		} else {
+			console.error("firstElement is not a valid HTMLElement");
+		}
+	} else {
+		console.error("firstSliderItem is not a valid array or is empty");
 	}
 });
 </script>
