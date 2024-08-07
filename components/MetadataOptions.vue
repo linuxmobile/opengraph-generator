@@ -70,7 +70,7 @@ const containerStyles = computed(() => {
           <label for="og_description" class="text-sm font-medium text-slate-400">Description</label>
           <textarea id="og_description" type="text" v-model="data.description"
             class="w-full min-h-40 p-2 bg-transparent border border-slate-800 rounded-md resize-none outline-none text-white"
-            autocomplete="off" />
+            autocomplete="off" spellcheck="false" />
         </div>
       </div>
 
