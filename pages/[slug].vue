@@ -5,35 +5,46 @@
 const route = useRoute();
 const slug = route.params.slug;
 
-const { data, error } = await useAsyncData("fetchUrl", async () => {
-	const response = await fetch(`/api/opengraph_images?shortUrl=${slug}`);
-	if (!response.ok) {
-		throw createError({
-			statusCode: response.status,
-			message: "Not found",
-		});
+const { metadata } = useMetadata();
+const url = metadata.value.url.replace(/\/$/, "");
+
+const { data, error } = await useAsyncData(async () => {
+	const response = await $fetch(`/api/urls?originalUrl=${url}`);
+
+	if (!response || !response.body.original_url) {
+		throw new Error("Original URL not found");
 	}
-	return await response.json();
-});
 
-if (data.value && data.value.body) {
-	const { title, description, og_image_url, original_url } = data.value.body;
+	const originalUrl = response.body.original_url;
 
-	useSeoMeta({
+	const ogResponse = await $fetch(
+		`/api/opengraph_images?originalUrl=${encodeURIComponent(originalUrl)}`,
+	);
+
+	const { title, description, og_image_url } = ogResponse.body;
+
+	return {
 		title,
 		description,
-		ogTitle: title,
-		ogDescription: description,
-		ogImage: og_image_url,
-		ogUrl: original_url,
-		twitterTitle: title,
-		twitterDescription: description,
-		twitterImage: og_image_url,
+		og_image_url,
+		originalUrl,
+	};
+});
+
+if (error.value) {
+	console.error("Error fetching data:", error.value);
+} else {
+	useSeoMeta({
+		title: data.value.title,
+		description: data.value.description,
+		ogTitle: data.value.title,
+		ogDescription: data.value.description,
+		ogImage: data.value.og_image_url,
+		ogUrl: data.value.originalUrl,
+		twitterTitle: data.value.title,
+		twitterDescription: data.value.description,
+		twitterImage: data.value.og_image_url,
 		twitterCard: "summary",
 	});
-
-	setTimeout(() => {
-		location.href = original_url;
-	}, 1000);
 }
 </script>
