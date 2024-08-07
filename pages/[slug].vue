@@ -3,12 +3,10 @@
 </template>
 <script setup>
 const route = useRoute();
-
-const { metadata } = useMetadata();
-const url = metadata.value.url.replace(/\/$/, "");
+const slug = route.params.slug;
 
 const { data, error } = await useAsyncData(async () => {
-	const response = await $fetch(`/api/urls?originalUrl=${url}`);
+	const response = await $fetch(`/api/urls?shortUrl=${slug}`);
 
 	if (!response || !response.body.original_url) {
 		throw new Error("Original URL not found");

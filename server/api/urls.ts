@@ -122,13 +122,13 @@ export default defineEventHandler(async (event) => {
 			},
 		};
 	} else if (method === "GET") {
-		const { originalUrl } = getQuery(event);
+		const { shortUrl, originalUrl } = getQuery(event);
 
-		if (!originalUrl) {
+		if (!shortUrl && !originalUrl) {
 			return {
 				status: 400,
 				body: {
-					error: "originalUrl is required",
+					error: "shortUrl or originalUrl is required",
 				},
 			};
 		}
@@ -145,11 +145,15 @@ export default defineEventHandler(async (event) => {
 			};
 		}
 
-		const { data: existingUrl, error: fetchError } = await supabase
-			.from("urls")
-			.select("*")
-			.eq("original_url", originalUrl)
-			.single();
+		let query = supabase.from("urls").select("*").single();
+
+		if (shortUrl) {
+			query = query.eq("short_url", shortUrl);
+		} else if (originalUrl) {
+			query = query.eq("original_url", originalUrl);
+		}
+
+		const { data: existingUrl, error: fetchError } = await query;
 
 		if (fetchError && fetchError.code !== "PGRST116") {
 			console.error("Error fetching data from Supabase:", fetchError);
