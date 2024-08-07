@@ -34,13 +34,9 @@ export default defineEventHandler(async (event) => {
 		return;
 	}
 
-	const isBrowser = /Chrome|Firefox|Safari|Edge|Opera/.test(userAgent);
+	const originalUrl = data.original_url.startsWith("http")
+		? data.original_url
+		: `http://${data.original_url}`;
 
-	if (!isBrowser) {
-		const originalUrl = data.original_url.startsWith("http")
-			? data.original_url
-			: `http://${data.original_url}`;
-
-		return sendRedirect(event, originalUrl, 302);
-	}
+	return sendRedirect(event, originalUrl, 302);
 });
