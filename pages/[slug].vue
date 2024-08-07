@@ -3,7 +3,6 @@
 </template>
 <script setup>
 const route = useRoute();
-const slug = route.params.slug;
 
 const { metadata } = useMetadata();
 const url = metadata.value.url.replace(/\/$/, "");
@@ -34,17 +33,19 @@ const { data, error } = await useAsyncData(async () => {
 if (error.value) {
 	console.error("Error fetching data:", error.value);
 } else {
-	useSeoMeta({
-		title: data.value.title,
-		description: data.value.description,
-		ogTitle: data.value.title,
-		ogDescription: data.value.description,
-		ogImage: data.value.og_image_url,
-		ogUrl: data.value.originalUrl,
-		twitterTitle: data.value.title,
-		twitterDescription: data.value.description,
-		twitterImage: data.value.og_image_url,
-		twitterCard: "summary",
-	});
+	setTimeout(() => {
+		useSeoMeta({
+			title: data.value.title,
+			description: data.value.description,
+			ogTitle: data.value.title,
+			ogDescription: data.value.description,
+			ogImage: data.value.og_image_url,
+			ogUrl: data.value.originalUrl,
+			twitterTitle: data.value.title,
+			twitterDescription: data.value.description,
+			twitterImage: data.value.og_image_url,
+			twitterCard: "summary",
+		});
+	}, 1000);
 }
 </script>
