@@ -14,7 +14,10 @@ export const useOpengraph = () => {
 		element: HTMLElement,
 	): Promise<string | null> => {
 		try {
-			const svgDataUrl = await toSvg(element);
+			const svgDataUrl = await toSvg(element, {
+				height: 315,
+				width: 600,
+			});
 			const response = await fetch(svgDataUrl);
 			const blob = await response.blob();
 			const blobUrl = URL.createObjectURL(blob);

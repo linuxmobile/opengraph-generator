@@ -6,8 +6,8 @@
         @click="handleOpengraph(gradient.id)"
         v-for="(gradient, index) in filteredGradients"
         :key="gradient.id"
-        :style="{ backgroundImage: `url(${gradient.gradient})` }"
-        class="relative rounded-3xl aspect-video h-full p-3
+        :style="{ backgroundImage: `url(${gradient.gradient})`, aspectRatio: '1.9 / 1' }"
+        class="relative rounded-3xl h-full p-3
           select-none flex flex-col items-center justify-center gap-y-2
           cursor-pointer bg-cover bg-center snap-center" :class="className">
         <div class="text-white">

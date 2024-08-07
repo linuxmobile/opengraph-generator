@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full min-h-98 relative">
+  <div class="w-full h-fit relative max-w-full">
     <div class="w-full absolute z-2 top-2 -left-2 text-slate-300 p-4 rounded-b-3xl">
       <button @click="fetchMetadata" class="rounded-full p-2 bg-white/10 flex gap-x-2 group">
         <Sparkle class="size-6"/>
@@ -14,7 +14,7 @@
       :svg="svg"
       :selectedId="selectedId"
       :isSlider="false"
-      :className="'!max-w-full pointer-events-none'"
+      :className="'pointer-events-none'"
       @updateSelectedId="updateSelectedId"
     />
     <div class="w-full absolute bottom-4 right-2 text-slate-300 p-4 rounded-b-3xl flex justify-end">
