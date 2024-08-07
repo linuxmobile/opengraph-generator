@@ -31,7 +31,6 @@ const { data, error } = await useAsyncData(async () => {
 if (error.value) {
 	console.error("Error fetching data:", error.value);
 } else {
-	setTimeout(() => {
 		useSeoMeta({
 			title: data.value.title,
 			description: data.value.description,
@@ -44,6 +43,5 @@ if (error.value) {
 			twitterImage: data.value.og_image_url,
 			twitterCard: "summary",
 		});
-	}, 1000);
 }
 </script>
