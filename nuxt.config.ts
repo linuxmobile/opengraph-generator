@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	compatibilityDate: "2024-04-03",
 	devtools: { enabled: true },
@@ -6,6 +5,9 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			baseUrl: process.env.BASE_URL || "http://localhost:3000",
+		},
+		private: {
+			apiSecretToken: process.env.API_SECRET_TOKEN,
 		},
 		apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
 		cloudinaryUrl: import.meta.env.CLOUDINARY_URL,
@@ -21,4 +23,15 @@ export default defineNuxtConfig({
 	},
 	css: ["@unocss/reset/tailwind.css"],
 	modules: ["@unocss/nuxt", "nuxt-lucide-icons", "@nuxtjs/supabase"],
+	routeRules: {
+		"/api/**": {
+			cors: true,
+			headers: {
+				"Access-Control-Allow-Origin": "http://localhost:3000",
+				"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+				"Access-Control-Allow-Headers":
+					"Content-Type, Authorization, X-API-SECRET",
+			},
+		},
+	},
 });
