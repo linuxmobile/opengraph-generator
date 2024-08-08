@@ -20,5 +20,5 @@ export const useGenerateAI = async (metadata: any) => {
 	setGeneratedTitle(data.title);
 	setGeneratedDescription(data.description);
 
-	return { generatedTitle: data.title, generatedDescription: data.description };
+	return { generatedTitle, generatedDescription };
 };

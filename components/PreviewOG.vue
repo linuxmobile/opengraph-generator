@@ -10,7 +10,7 @@
       :title="title"
       :description="description"
       :author="author"
-      :url="url"
+      :url="url ? url : undefined"
       :svg="svg ? svg : undefined"
       :selectedId="selectedId"
       :isSlider="false"
@@ -50,7 +50,7 @@ const emit = defineEmits([
 
 async function fetchMetadata() {
 	if (!props.url) {
-		console.log("URL is not provided");
+		console.log("URL is not provided in FetchMetadata");
 		return;
 	}
 	let normalizedUrl = props.url;

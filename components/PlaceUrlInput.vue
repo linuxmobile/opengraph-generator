@@ -104,7 +104,7 @@ const handleSubmit = async () => {
 				`/api/extract-metadata?url=${encodeURIComponent(url.value)}`,
 			);
 			if (fetchedMetadata) {
-				setMetadata(fetchedMetadata);
+				setMetadata({ ...fetchedMetadata, url: normalizedUrl });
 				if (metadata.value) {
 					const { title, description, author, keywords, headings } =
 						metadata.value;

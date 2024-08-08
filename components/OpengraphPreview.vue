@@ -14,8 +14,8 @@
           <img v-if="svg" :src="svg" :class="gradient.style.svg"/>
           <p :class="gradient.style.title" class="w-full">{{ title }}</p>
           <p :class="gradient.style.description" class="line-clamp-2">{{ description }}</p>
-          <p :class="gradient.style.author">{{ author }}</p>
-          <p :class="gradient.style.url">{{ url }}</p>
+          <p v-if="author" :class="gradient.style.author">{{ author }}</p>
+          <p v-if="url" :class="gradient.style.url">{{ url }}</p>
         </div>
       </div>
     </div>

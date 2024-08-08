@@ -4,7 +4,7 @@
       :title="title"
       :description="description"
       :author="author"
-      :url="url"
+      :url="url ? url : undefined"
       :svg="svg ? svg : undefined"
       :selectedId="selectedId"
       :isSlider="true"
