@@ -1,7 +1,7 @@
 export async function useValidateUrl(url: string): Promise<boolean> {
 	try {
 		const urlPattern =
-			/^(https?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/gi;
+			/^(https?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}(\/[a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
 		if (!urlPattern.test(url)) {
 			alert("La URL no es válida");
 			return false;
@@ -10,6 +10,14 @@ export async function useValidateUrl(url: string): Promise<boolean> {
 		// Añade el protocolo si falta
 		if (!/^https?:\/\//i.test(url)) {
 			url = "http://" + url;
+		}
+
+		// Verificar si la URL contiene un archivo específico
+		const filePattern =
+			/\/[^\/]+\.(md|txt|html|htm|pdf|doc|docx|xls|xlsx|ppt|pptx|json|xml|csv)$/i;
+		if (filePattern.test(url)) {
+			alert("La URL no debe contener archivos específicos");
+			return false;
 		}
 
 		try {
