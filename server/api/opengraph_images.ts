@@ -42,10 +42,16 @@ export default defineEventHandler(async (event) => {
 			};
 		}
 
+		// Normalize the URL
+		let normalizedUrl = originalUrl;
+		if (normalizedUrl.endsWith("/")) {
+			normalizedUrl = normalizedUrl.slice(0, -1);
+		}
+
 		const { data: existingImage, error: fetchError } = await supabase
 			.from("opengraph_images")
 			.select("*")
-			.eq("original_url", originalUrl)
+			.eq("original_url", normalizedUrl)
 			.single();
 
 		if (fetchError && fetchError.code !== "PGRST116") {
@@ -91,6 +97,11 @@ export default defineEventHandler(async (event) => {
 			!originalUrl.startsWith("https://")
 		) {
 			originalUrl = `https://${originalUrl}`;
+		}
+
+		// Remove trailing slash
+		if (originalUrl.endsWith("/")) {
+			originalUrl = originalUrl.slice(0, -1);
 		}
 
 		// Extract the short URL if it's a full URL

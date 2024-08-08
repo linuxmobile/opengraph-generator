@@ -39,6 +39,11 @@ export default defineEventHandler(async (event) => {
 			originalUrl = `https://${originalUrl}`;
 		}
 
+		// Remove trailing slash
+		if (originalUrl.endsWith("/")) {
+			originalUrl = originalUrl.slice(0, -1);
+		}
+
 		const supabase = serverSupabaseServiceRole<Database>(event);
 
 		if (!supabase) {
@@ -133,6 +138,11 @@ export default defineEventHandler(async (event) => {
 			};
 		}
 
+		let normalizedUrl = originalUrl;
+		if (normalizedUrl && normalizedUrl.endsWith("/")) {
+			normalizedUrl = normalizedUrl.slice(0, -1);
+		}
+
 		const supabase = serverSupabaseServiceRole<Database>(event);
 
 		if (!supabase) {
@@ -149,8 +159,8 @@ export default defineEventHandler(async (event) => {
 
 		if (shortUrl) {
 			query = query.eq("short_url", shortUrl);
-		} else if (originalUrl) {
-			query = query.eq("original_url", originalUrl);
+		} else if (normalizedUrl) {
+			query = query.eq("original_url", normalizedUrl);
 		}
 
 		const { data: existingUrl, error: fetchError } = await query;
