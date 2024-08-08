@@ -1,30 +1,15 @@
-import * as cheerio from "cheerio";
-
-export async function useValidateUrl(url: string) {
+export function useValidateUrl(url: string): boolean {
 	try {
-		const urlPattern = new RegExp(
-			"^(https?:\\/\\/)?" +
-				"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" +
-				"((\\d{1,3}\\.){3}\\d{1,3}))" +
-				"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-				"(\\?[;&a-z\\d%_.~+=-]*)?" +
-				"(\\#[-a-z\\d_]*)?$",
-			"i",
-		);
+		const urlPattern =
+			/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 		if (!urlPattern.test(url)) {
 			alert("La URL no es válida");
 			return false;
 		}
 
-		const response = await fetch(url);
-		const html = await response.text();
-
-		const $ = cheerio.load(html);
-
-		const title = $("title").text();
-		if (!title) {
-			alert("La URL no parece ser una página web válida");
-			return false;
+		// Añade el protocolo si falta
+		if (!/^https?:\/\//i.test(url)) {
+			url = "http://" + url;
 		}
 
 		return true;
