@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { SMALL_SCREEN_MAX_WIDTH } from '~/constants';
+import { SMALL_SCREEN_MAX_WIDTH } from "~/constants";
 
 interface Props {
-  title: string;
-  description: string;
+	title: string;
+	description: string;
 }
 
 const props = defineProps<Props>();
@@ -11,34 +11,34 @@ const emit = defineEmits(["metadataUpdate", "toggleMenu"]);
 const isSmallScreen = useMediaQuery(`(max-width: ${SMALL_SCREEN_MAX_WIDTH})`);
 
 const data = ref({
-  title: props.title,
-  description: props.description,
+	title: props.title,
+	description: props.description,
 });
 
 // Watch for changes in props and update data accordingly
 watch(
-  () => props,
-  (newProps) => {
-    data.value = { ...newProps };
-  },
-  { deep: true },
+	() => props,
+	(newProps) => {
+		data.value = { ...newProps };
+	},
+	{ deep: true },
 );
 
 watch(
-  data,
-  (newMetadata) => {
-    emit("metadataUpdate", newMetadata);
-  },
-  { deep: true },
+	data,
+	(newMetadata) => {
+		emit("metadataUpdate", newMetadata);
+	},
+	{ deep: true },
 );
 
 const containerStyles = computed(() => {
-  if (isSmallScreen.value) {
-    return "bg-slate-950 z-50 fixed border border-slate-900 rounded-t-3xl max-h-[24rem] w-full bottom-0 left-0 p-6 overflow-y-scroll"
-  }
+	if (isSmallScreen.value) {
+		return "bg-slate-950 px-4 py-4 flex flex-col gap-y-4";
+	}
 
-  return "bg-slate-950 z-50 border border-slate-900 rounded-3xl fixed top-2 left-2 px-3 py-6 w-full max-w-sm min-h-[calc(100dvh-20px)]"
-})
+	return "bg-slate-950 z-50 border border-slate-900 rounded-3xl fixed top-2 left-2 px-3 py-6 w-full max-w-sm min-h-[calc(100dvh-20px)]";
+});
 </script>
 
 <template>
