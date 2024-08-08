@@ -5,7 +5,7 @@
       :description="description"
       :author="author"
       :url="url"
-      :svg="svg"
+      :svg="svg ? svg : undefined"
       :selectedId="selectedId"
       :isSlider="true"
       @updateSelectedId="updateSelectedId"

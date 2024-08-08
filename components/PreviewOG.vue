@@ -11,7 +11,7 @@
       :description="description"
       :author="author"
       :url="url"
-      :svg="svg"
+      :svg="svg ? svg : undefined"
       :selectedId="selectedId"
       :isSlider="false"
       :className="'pointer-events-none'"

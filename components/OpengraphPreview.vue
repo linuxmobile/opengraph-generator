@@ -11,7 +11,7 @@
           select-none flex flex-col items-center justify-center gap-y-2
           cursor-pointer bg-cover bg-center snap-center" :class="className">
         <div class="text-white">
-          <img :src="svg" :class="gradient.style.svg"/>
+          <img v-if="svg" :src="svg" :class="gradient.style.svg"/>
           <p :class="gradient.style.title" class="w-full">{{ title }}</p>
           <p :class="gradient.style.description" class="line-clamp-2">{{ description }}</p>
           <p :class="gradient.style.author">{{ author }}</p>
