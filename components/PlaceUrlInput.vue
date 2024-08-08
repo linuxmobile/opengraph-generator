@@ -23,6 +23,7 @@
 
 <script setup>
 import { ArrowRight, Sparkles } from "lucide-vue-next";
+import { useValidateUrl } from "~/composables/useValidateUrl";
 
 const url = ref("");
 const router = useRouter();
@@ -78,6 +79,10 @@ onMounted(() => {
 });
 
 const handleSubmit = async () => {
+	const isValid = await useValidateUrl(url.value);
+	if (!isValid) {
+		return;
+	}
 	if (!url.value) {
 		return;
 	}
