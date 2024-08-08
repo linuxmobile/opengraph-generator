@@ -13,6 +13,7 @@ type OpenGraphImage = {
 	description: string;
 	updated_at?: string;
 	short_url: string;
+	og_image_url: string;
 	original_url: string;
 };
 
@@ -80,9 +81,9 @@ export default defineEventHandler(async (event) => {
 		}
 	} else if (method === "POST") {
 		const body = await readBody(event);
-		let { title, description, shortUrl, originalUrl } = body;
+		let { title, description, shortUrl, originalUrl, ogImageUrl } = body;
 
-		if (!title || !description || !shortUrl || !originalUrl) {
+		if (!title || !description || !shortUrl || !originalUrl || !ogImageUrl) {
 			return {
 				status: 400,
 				body: {
@@ -99,7 +100,6 @@ export default defineEventHandler(async (event) => {
 			originalUrl = `https://${originalUrl}`;
 		}
 
-		// Remove trailing slash
 		if (originalUrl.endsWith("/")) {
 			originalUrl = originalUrl.slice(0, -1);
 		}
@@ -140,6 +140,7 @@ export default defineEventHandler(async (event) => {
 			description,
 			short_url: shortUrl,
 			original_url: originalUrl,
+			og_image_url: ogImageUrl,
 			created_at: new Date().toISOString(),
 		};
 
@@ -154,6 +155,53 @@ export default defineEventHandler(async (event) => {
 				status: 500,
 				body: {
 					error: "Failed to create OpenGraph image",
+					details: error.message,
+				},
+			};
+		}
+
+		return {
+			statusCode: 200,
+			body: data[0],
+		};
+	} else if (method === "PATCH") {
+		const body = await readBody(event);
+		const { originalUrl, og_image_url } = body;
+
+		if (!originalUrl || !og_image_url) {
+			return {
+				status: 400,
+				body: {
+					error: "originalUrl and og_image_url are required",
+				},
+			};
+		}
+
+		// Normalize the URL
+		let normalizedUrl = originalUrl;
+		if (
+			!normalizedUrl.startsWith("http://") &&
+			!normalizedUrl.startsWith("https://")
+		) {
+			normalizedUrl = `https://${normalizedUrl}`;
+		}
+
+		if (normalizedUrl.endsWith("/")) {
+			normalizedUrl = normalizedUrl.slice(0, -1);
+		}
+
+		const { data, error } = await supabase
+			.from("opengraph_images")
+			.update({ og_image_url })
+			.eq("original_url", normalizedUrl)
+			.select();
+
+		if (error) {
+			console.error("Error updating data in Supabase:", error);
+			return {
+				status: 500,
+				body: {
+					error: "Failed to update OpenGraph image",
 					details: error.message,
 				},
 			};

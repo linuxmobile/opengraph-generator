@@ -111,6 +111,14 @@ async function generateShareableLink() {
 		if (data && data.body.imageUrl) {
 			const imageUrl = data.body.imageUrl;
 			console.log("Image uploaded successfully:", imageUrl);
+
+			await $fetch("/api/opengraph_images", {
+				method: "PATCH",
+				body: {
+					originalUrl: metadata.value.url,
+					og_image_url: imageUrl,
+				},
+			});
 		} else {
 			throw new Error("Image URL not found in response");
 		}

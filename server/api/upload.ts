@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
 	const transformationOptions = {
 		transformation: [
 			{ width: 500, crop: "scale" },
-			{ quality: "auto:good" },
+			{ quality: 100 },
 			{ fetch_format: "jpg" },
 		],
 	};

@@ -18,12 +18,12 @@ const { data, error } = await useAsyncData(async () => {
 		`/api/opengraph_images?originalUrl=${encodeURIComponent(originalUrl)}`,
 	);
 
-	const { title, description, og_image_url } = ogResponse.body;
+	const { title, description, ogImageUrl } = ogResponse.body;
 
 	return {
 		title,
 		description,
-		og_image_url,
+		ogImageUrl,
 		originalUrl,
 	};
 });
@@ -31,17 +31,17 @@ const { data, error } = await useAsyncData(async () => {
 if (error.value) {
 	console.error("Error fetching data:", error.value);
 } else {
-		useSeoMeta({
-			title: data.value.title,
-			description: data.value.description,
-			ogTitle: data.value.title,
-			ogDescription: data.value.description,
-			ogImage: data.value.og_image_url,
-			ogUrl: data.value.originalUrl,
-			twitterTitle: data.value.title,
-			twitterDescription: data.value.description,
-			twitterImage: data.value.og_image_url,
-			twitterCard: "summary",
-		});
+	useSeoMeta({
+		title: data.value.title,
+		description: data.value.description,
+		ogTitle: data.value.title,
+		ogDescription: data.value.description,
+		ogImage: data.value.ogImageUrl,
+		ogUrl: data.value.originalUrl,
+		twitterTitle: data.value.title,
+		twitterDescription: data.value.description,
+		twitterImage: data.value.ogImageUrl,
+		twitterCard: "summary",
+	});
 }
 </script>
