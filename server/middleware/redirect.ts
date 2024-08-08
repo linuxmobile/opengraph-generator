@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
 	const userAgent = event.node.req.headers["user-agent"] || "";
 
 	const isCrawler =
-		/facebookexternalhit|Twitterbot|Pinterest|Googlebot|Bingbot|LinkedInBot|Slackbot|WhatsApp/.test(
+		/facebookexternalhit|Twitterbot|Pinterest|Googlebot|Bingbot|LinkedInBot|Slackbot|WhatsApp|Discordbot|Twitterbot/.test(
 			userAgent,
 		);
 
