@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
 
 		// Normalize the URL
 		let normalizedUrl = originalUrl;
-		if (normalizedUrl.endsWith("/")) {
+		if (typeof normalizedUrl === "string" && normalizedUrl.endsWith("/")) {
 			normalizedUrl = normalizedUrl.slice(0, -1);
 		}
 

@@ -139,7 +139,7 @@ export default defineEventHandler(async (event) => {
 		}
 
 		let normalizedUrl = originalUrl;
-		if (normalizedUrl && normalizedUrl.endsWith("/")) {
+		if (typeof normalizedUrl === "string" && normalizedUrl.endsWith("/")) {
 			normalizedUrl = normalizedUrl.slice(0, -1);
 		}
 
