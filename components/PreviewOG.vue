@@ -8,7 +8,7 @@
     </div>
     <OpengraphPreview
       :title="title"
-      :description="description"
+      :description="description ? description : undefined"
       :author="author"
       :url="url ? url : undefined"
       :svg="svg ? svg : undefined"

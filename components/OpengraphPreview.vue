@@ -12,8 +12,8 @@
           cursor-pointer bg-cover bg-center snap-center" :class="className">
         <div class="text-white">
           <img v-if="svg" :src="svg" :class="gradient.style.svg"/>
-          <p :class="gradient.style.title" class="w-full">{{ title }}</p>
-          <p :class="gradient.style.description" class="line-clamp-2">{{ description }}</p>
+          <p :class="gradient.style.title" class="w-full line-clamp-2">{{ title }}</p>
+          <p v-if="description" :class="gradient.style.description" class="line-clamp-2">{{ description }}</p>
           <p v-if="author" :class="gradient.style.author">{{ author }}</p>
           <p v-if="url" :class="gradient.style.url">{{ url }}</p>
         </div>

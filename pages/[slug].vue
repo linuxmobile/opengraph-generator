@@ -18,12 +18,12 @@ const { data, error } = await useAsyncData(async () => {
 		`/api/opengraph_images?originalUrl=${encodeURIComponent(originalUrl)}`,
 	);
 
-	const { title, description, ogImageUrl } = ogResponse.body;
+	const { title, description, og_image_url } = ogResponse.body;
 
 	return {
 		title,
 		description,
-		ogImageUrl,
+		og_image_url,
 		originalUrl,
 	};
 });
@@ -36,11 +36,11 @@ if (error.value) {
 		description: data.value.description,
 		ogTitle: data.value.title,
 		ogDescription: data.value.description,
-		ogImage: data.value.ogImageUrl,
+		ogImage: data.value.og_image_url,
 		ogUrl: data.value.originalUrl,
 		twitterTitle: data.value.title,
 		twitterDescription: data.value.description,
-		twitterImage: data.value.ogImageUrl,
+		twitterImage: data.value.og_image_url,
 		twitterCard: "summary",
 	});
 }
