@@ -1,4 +1,4 @@
-import * as cheerio from "cheerio";
+import { parseHTML } from "linkedom";
 
 export const useMetadataService = () => {
 	const extractMetadata = async (url: string) => {
@@ -7,25 +7,48 @@ export const useMetadataService = () => {
 		}
 
 		const html: string = await $fetch(url);
-		const $ = cheerio.load(html);
+		const { document } = parseHTML(html);
 
-		const metadata: { [key: string]: string | null } = {
-			title: $("head title").text() || null,
-			description: $('head meta[name="description"]').attr("content") || null,
-			author: $('head meta[name="author"]').attr("content") || null,
-			keywords: $('head meta[name="keywords"]').attr("content") || null,
-			favicon: $('link[rel="icon"]').attr("href") || null,
-			headings: $("h1, h2, h3")
-				.map((i, el) => $(el).text())
-				.get()
-				.join(", "),
+		const metadata: {
+			[key: string]:
+				| string
+				| null
+				| { h1: string[]; h2: string[]; h3: string[] };
+		} = {
+			title: document.querySelector("head title")?.textContent || null,
+			description:
+				document
+					.querySelector('head meta[name="description"]')
+					?.getAttribute("content") || null,
+			author:
+				document
+					.querySelector('head meta[name="author"]')
+					?.getAttribute("content") || null,
+			keywords:
+				document
+					.querySelector('head meta[name="keywords"]')
+					?.getAttribute("content") || null,
+			favicon:
+				document.querySelector('link[rel="icon"]')?.getAttribute("href") ||
+				null,
+			headings: {
+				h1: Array.from(document.querySelectorAll("h1")).map(
+					(el) => el.textContent || "",
+				),
+				h2: Array.from(document.querySelectorAll("h2")).map(
+					(el) => el.textContent || "",
+				),
+				h3: Array.from(document.querySelectorAll("h3")).map(
+					(el) => el.textContent || "",
+				),
+			},
 		};
 
-		$("meta").each((i, el) => {
-			const property = $(el).attr("property");
+		document.querySelectorAll("meta").forEach((el) => {
+			const property = el.getAttribute("property");
 			if (property?.startsWith("og:")) {
 				const key = property.substring(3);
-				metadata[key] = $(el).attr("content") || null;
+				metadata[key] = el.getAttribute("content") || null;
 			}
 		});
 
