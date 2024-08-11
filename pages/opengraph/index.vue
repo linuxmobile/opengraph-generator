@@ -15,7 +15,6 @@
 				</button>
 				<button class="w-full rounded-lg py-2 bg-white/5">Edit</button>
 			</div>
-
 			<SliderPreviewOg
         :title="metadata.title"
         :description="metadata.description"
@@ -26,7 +25,6 @@
         @updateSelectedId="updateSelectedId"
         @metadataUpdate="handleMetadataUpdate"
         @updateOldMetadata="handleUpdateOldMetadata" />
-
 			<PreviewOG
 			  :title="metadata.title"
 				:description="metadata.description"
@@ -38,9 +36,7 @@
 				@toggleOptionsPanel="toggleOptionsPanel"
 				@metadataUpdate="handleMetadataUpdate"
 				@updateOldMetadata="handleUpdateOldMetadata" />
-
 		</div>
-
 		<div class="w-full flex items-center justify-between">
 			<Logo
 			  class="flex items-center w-full justify-start pb-3"
@@ -56,7 +52,6 @@
 		</div>
 	</main>
 </template>
-
 <script setup>
 import Github from "~/assets/Github.vue";
 import { SMALL_SCREEN_MAX_WIDTH } from "~/constants";
