@@ -7,14 +7,6 @@
 				v-bind="metadata"
 				@metadata-update="updateMetadata"
 				@toggle-menu="toggleMenu" />
-			<div class="w-full flex items-center justify-between gap-x-5 pt-5">
-				<button
-				  class="w-full rounded-lg py-2 bg-white/5"
-					@click="generateShareableLink">
-					Generate Shareable Link
-				</button>
-				<button class="w-full rounded-lg py-2 bg-white/5">Edit</button>
-			</div>
 			<SliderPreviewOg
         :title="metadata.title"
         :description="metadata.description"
@@ -101,4 +93,4 @@ const absoluteFaviconUrl = computed(() =>
 );
 
 async function generateShareableLink() {}
-</script>>
+</script>

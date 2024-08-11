@@ -24,7 +24,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import Sparkle from "~/assets/Sparkle.vue";
 import { Settings } from "lucide-vue-next";

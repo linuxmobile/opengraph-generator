@@ -12,7 +12,6 @@
     />
   </div>
 </template>
-
 <script setup>
 const { metadata, oldMetadata } = useMetadata();
 

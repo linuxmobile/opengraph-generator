@@ -4,7 +4,12 @@ export default defineEventHandler(async (event) => {
 	const path = event.node.req.url || "";
 	const slug = path.split("/")[1];
 
-	if (!slug || slug.startsWith("api")) {
+	if (
+		!slug ||
+		slug.startsWith("api") ||
+		slug === "opengraph" ||
+		slug === "preview"
+	) {
 		return;
 	}
 
