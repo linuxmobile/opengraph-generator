@@ -1,4 +1,5 @@
-import * as cheerio from "cheerio";
+import { parseHTML } from "linkedom";
+const config = useRuntimeConfig();
 
 type Metadata = {
 	title: string | null;
@@ -11,11 +12,20 @@ type Metadata = {
 };
 
 export default defineEventHandler(async (event) => {
+	const apiSecretToken = event.node.req.headers["x-api-secret"];
+
+	if (apiSecretToken !== config.private.apiSecretToken) {
+		throw createError({
+			statusCode: 401,
+			statusMessage: "Unauthorized",
+		});
+	}
+
 	let { url } = getQuery(event) as { url: string };
 
 	if (!url) {
 		return {
-			error: "No URL provided",
+			error: "No URL provided in extract-metadata",
 		};
 	}
 
@@ -25,32 +35,43 @@ export default defineEventHandler(async (event) => {
 
 	try {
 		const html: string = await $fetch(url);
-		const $ = cheerio.load(html);
+		const { document } = parseHTML(html);
 
 		const metadata: Metadata = {
-			title: $("head title").text() || null,
-			description: $('head meta[name="description"]').attr("content") || null,
-			author: $('head meta[name="author"]').attr("content") || null,
-			keywords: $('head meta[name="keywords"]').attr("content") || null,
-			favicon: $('link[rel="icon"]').attr("href") || null,
+			title: document.querySelector("head title")?.textContent || null,
+			description:
+				document
+					.querySelector('head meta[name="description"]')
+					?.getAttribute("content") || null,
+			author:
+				document
+					.querySelector('head meta[name="author"]')
+					?.getAttribute("content") || null,
+			keywords:
+				document
+					.querySelector('head meta[name="keywords"]')
+					?.getAttribute("content") || null,
+			favicon:
+				document.querySelector('link[rel="icon"]')?.getAttribute("href") ||
+				null,
 			headings: {
-				h1: $("h1")
-					.map((i, el) => $(el).text())
-					.get(),
-				h2: $("h2")
-					.map((i, el) => $(el).text())
-					.get(),
-				h3: $("h3")
-					.map((i, el) => $(el).text())
-					.get(),
+				h1: Array.from(document.querySelectorAll("h1")).map(
+					(el) => el.textContent || "",
+				),
+				h2: Array.from(document.querySelectorAll("h2")).map(
+					(el) => el.textContent || "",
+				),
+				h3: Array.from(document.querySelectorAll("h3")).map(
+					(el) => el.textContent || "",
+				),
 			},
 		};
 
-		$("meta").each((i, el) => {
-			const property = $(el).attr("property");
+		document.querySelectorAll("meta").forEach((el) => {
+			const property = el.getAttribute("property");
 			if (property?.startsWith("og:")) {
 				const key = property.substring(3);
-				metadata[key] = $(el).attr("content") || null;
+				metadata[key] = el.getAttribute("content") || null;
 			}
 		});
 

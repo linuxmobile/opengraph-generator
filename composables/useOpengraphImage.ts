@@ -1,6 +1,6 @@
 import { toSvg } from "html-to-image";
 
-export const useOpengraph = () => {
+export const useOpengraphImage = () => {
 	const [opengraphID, setOpengraphID] = useGlobalGenericState<number>(
 		"opengraphID",
 		1,

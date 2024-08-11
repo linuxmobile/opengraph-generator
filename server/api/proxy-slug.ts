@@ -1,6 +1,15 @@
 import { serverSupabaseServiceRole } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
+	const config = useRuntimeConfig();
+	const apiSecretToken = event.node.req.headers["x-api-secret"];
+
+	if (apiSecretToken !== config.private.apiSecretToken) {
+		throw createError({
+			statusCode: 401,
+			statusMessage: "Unauthorized",
+		});
+	}
 	const supabase = serverSupabaseServiceRole(event);
 	const { slug } = event.context.params as Record<string, string>;
 
@@ -17,5 +26,7 @@ export default defineEventHandler(async (event) => {
 		});
 	}
 
-	return sendRedirect(event, data.original_url, 302);
+	return {
+		original_url: data.original_url,
+	};
 });

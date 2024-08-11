@@ -25,7 +25,7 @@
 <script setup>
 import styles from "~/assets/styles.json";
 const { gradients, fetchGradients } = useGradients();
-const { setOpengraphID, generateImage } = useOpengraph();
+const { setOpengraphID, generateImage } = useOpengraphImage();
 
 const props = defineProps({
 	title: String,

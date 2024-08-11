@@ -16,13 +16,15 @@
 				<button class="w-full rounded-lg py-2 bg-white/5">Edit</button>
 			</div>
 			<SliderPreviewOg
-			  :title="metadata.title"
-				:description="metadata.description"
-				:author="metadata.author"
-				:url="metadata.url"
-				:svg="absoluteFaviconUrl"
-				:selectedId="selectedId"
-				@updateSelectedId="updateSelectedId" />
+        :title="metadata.title"
+        :description="metadata.description"
+        :author="metadata.author"
+        :url="metadata.url"
+        :svg="absoluteFaviconUrl"
+        :selectedId="selectedId"
+        @updateSelectedId="updateSelectedId"
+        @metadataUpdate="handleMetadataUpdate"
+        @updateOldMetadata="handleUpdateOldMetadata" />
 			<PreviewOG
 			  :title="metadata.title"
 				:description="metadata.description"
@@ -31,9 +33,10 @@
 				:svg="absoluteFaviconUrl"
 				:selectedId="selectedId"
 				@updateSelectedId="updateSelectedId"
-				@toggleOptionsPanel="toggleOptionsPanel" />
+				@toggleOptionsPanel="toggleOptionsPanel"
+				@metadataUpdate="handleMetadataUpdate"
+				@updateOldMetadata="handleUpdateOldMetadata" />
 		</div>
-
 		<div class="w-full flex items-center justify-between">
 			<Logo
 			  class="flex items-center w-full justify-start pb-3"
@@ -49,20 +52,20 @@
 		</div>
 	</main>
 </template>
-
 <script setup>
 import Github from "~/assets/Github.vue";
-import { toJpeg } from "html-to-image";
 import { SMALL_SCREEN_MAX_WIDTH } from "~/constants";
+import { getAbsoluteFaviconUrl } from "~/utils/getAbsoluteFaviconUrl";
 
-const { metadata, setMetadata } = useMetadata();
-const { ogImageUrl } = useOpengraph();
+const { metadata, setMetadata, oldMetadata, setOldMetadata } = useMetadata();
+const { ogImageUrl } = useOpengraphImage();
 const isSmallScreen = useMediaQuery(`(max-width: ${SMALL_SCREEN_MAX_WIDTH})`);
 
 function updateMetadata(newMetadata) {
 	setMetadata({
 		...metadata.value,
-		...newMetadata,
+		title: newMetadata.title,
+		description: newMetadata.description,
 	});
 }
 
@@ -81,81 +84,21 @@ function toggleOptionsPanel() {
 	isOptionsPanelOpen.value = !isOptionsPanelOpen.value;
 }
 
-const absoluteFaviconUrl = computed(() => {
-	if (!metadata.value.favicon || !metadata.value.url) return null;
-	const baseUrl = metadata.value.url.endsWith("/")
-		? metadata.value.url.slice(0, -1)
-		: metadata.value.url;
-	const faviconPath = metadata.value.favicon.startsWith("/")
-		? metadata.value.favicon.slice(1)
-		: metadata.value.favicon;
-	return metadata.value.favicon.startsWith("http")
-		? metadata.value.favicon
-		: `${baseUrl}/${faviconPath}`;
-});
-
-async function generateShareableLink() {
-	try {
-		const image = ogImageUrl.value;
-		if (!image) {
-			return;
-		}
-
-		const jpegImage = await convertSvgToJpeg(image);
-
-		const data = await $fetch("/api/upload", {
-			method: "POST",
-			body: { image: jpegImage },
-		});
-
-		if (data && data.body.imageUrl) {
-			const imageUrl = data.body.imageUrl;
-			console.log("Image uploaded successfully:", imageUrl);
-
-			await $fetch("/api/opengraph_images", {
-				method: "PATCH",
-				body: {
-					originalUrl: metadata.value.url,
-					og_image_url: imageUrl,
-				},
-			});
-		} else {
-			throw new Error("Image URL not found in response");
-		}
-	} catch (error) {
-		console.error("Error generating shareable link:", error);
-	}
+function updateOldMetadata(newMetadata) {
+	setOldMetadata(newMetadata);
 }
 
-async function convertSvgToJpeg(svgUrl) {
-	const response = await fetch(svgUrl, {
-		mode: "cors",
-		credentials: "include",
-	});
-	const svgText = await response.text();
-	const svgBlob = new Blob([svgText], { type: "image/svg+xml" });
-	const svgUrlBlob = URL.createObjectURL(svgBlob);
-
-	const img = new Image();
-	img.crossOrigin = "anonymous";
-	img.src = svgUrlBlob;
-
-	return new Promise((resolve, reject) => {
-		img.onload = async () => {
-			const svgElement = document.createElement("div");
-			svgElement.innerHTML = svgText;
-			document.body.appendChild(svgElement);
-
-			try {
-				const jpegUrl = await toJpeg(svgElement, { quality: 0.8 });
-				document.body.removeChild(svgElement);
-				resolve(jpegUrl);
-			} catch (error) {
-				document.body.removeChild(svgElement);
-				reject(error);
-			}
-		};
-		img.onerror = (error) => reject(error);
-	});
+function handleMetadataUpdate(newMetadata) {
+	updateMetadata(newMetadata);
 }
-</script>
+
+function handleUpdateOldMetadata(newOldMetadata) {
+	updateOldMetadata(newOldMetadata);
+}
+
+const absoluteFaviconUrl = computed(() =>
+	getAbsoluteFaviconUrl(metadata.value),
+);
+
+async function generateShareableLink() {}
+</script>>
