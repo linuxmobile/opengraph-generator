@@ -5,7 +5,7 @@ import { z } from "zod";
 const config = useRuntimeConfig();
 
 const google = createGoogleGenerativeAI({
-	apiKey: config.apiKey,
+	apiKey: config.private.apiKey,
 });
 
 const PROMPT_INTRO =
@@ -19,6 +19,14 @@ const PROMPT_CONCLUSION =
 
 export default defineEventHandler(async (event) => {
 	const metadata = await readBody(event);
+
+	const apiSecretToken = event.node.req.headers["x-api-secret"];
+	if (apiSecretToken !== config.private.apiSecretToken) {
+		throw createError({
+			statusCode: 401,
+			statusMessage: "Unauthorized",
+		});
+	}
 
 	const prompt = `
         ${PROMPT_INTRO}

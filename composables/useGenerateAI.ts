@@ -1,24 +1,29 @@
-import { useGlobalGenericState } from "~/utils/useGlobalGenericState";
-
+const config = useRuntimeConfig();
 export const useGenerateAI = async (metadata: any) => {
-	const [generatedTitle, setGeneratedTitle] = useGlobalGenericState<string>(
-		"generatedTitle",
-		"",
-	);
-	const [generatedDescription, setGeneratedDescription] =
-		useGlobalGenericState<string>("generatedDescription", "");
+	try {
+		const data = await $fetch("/api/generateAI", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"x-api-secret": config.private.apiSecretToken,
+			},
+			body: JSON.stringify(metadata),
+		});
 
-	const response = await fetch("/api/generateAI", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(metadata),
-	});
-
-	const data = await response.json();
-	setGeneratedTitle(data.title);
-	setGeneratedDescription(data.description);
-
-	return { generatedTitle, generatedDescription };
+		if (data) {
+			return {
+				generatedTitle: data.title,
+				generatedDescription: data.description,
+			};
+		} else {
+			console.log("No data returned from API");
+			return {
+				generatedTitle: "",
+				generatedDescription: "",
+			};
+		}
+	} catch (error) {
+		console.error("Error fetching AI data:", (error as Error).message);
+		throw new Error((error as Error).message);
+	}
 };

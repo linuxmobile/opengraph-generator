@@ -7,8 +7,12 @@ export async function useValidateUrl(url: string): Promise<boolean> {
 			return false;
 		}
 
-		if (!/^https?:\/\//i.test(url)) {
-			url = "http://" + url;
+		// Force HTTPS
+		if (!/^https:\/\//i.test(url)) {
+			url = url.replace(/^http:\/\//i, "https://");
+			if (!/^https:\/\//i.test(url)) {
+				url = "https://" + url;
+			}
 		}
 
 		const filePattern =
@@ -18,25 +22,22 @@ export async function useValidateUrl(url: string): Promise<boolean> {
 			return false;
 		}
 
-		try {
-			const response = await fetch(
-				`/api/extract-metadata?url=${encodeURIComponent(url)}`,
-			);
-			const metadata = await response.json();
+		interface ApiResponse {
+			valid: boolean;
+			message?: string;
+		}
 
-			if (metadata.error) {
-				alert("The URL is not accessible or is not a valid web page");
-				return false;
-			}
+		const { valid, message }: ApiResponse = await $fetch(`/api/validate-url`, {
+			params: { url },
+		});
 
-			return true;
-		} catch (error) {
-			console.error("Error validating URL:", error);
-			alert("Error al validar la URL");
+		if (!valid) {
+			alert(message || "The URL is not accessible or is not a valid web page");
 			return false;
 		}
+
+		return true;
 	} catch (error) {
-		console.error("Error validating URL:", error);
 		alert("Error al validar la URL");
 		return false;
 	}

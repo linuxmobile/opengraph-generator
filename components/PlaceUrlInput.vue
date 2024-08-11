@@ -24,10 +24,11 @@
 <script setup>
 import { ArrowRight, Sparkles } from "lucide-vue-next";
 import { useValidateUrl } from "~/composables/useValidateUrl";
+import { normalizeUrl } from "~/utils/normalizeUrl";
 
 const url = ref("");
 const router = useRouter();
-const { setMetadata, metadata } = useMetadata();
+const { setMetadata, setOldMetadata } = useMetadata();
 const { start, finish } = useLoadingIndicator();
 
 const placeholder = ref("");
@@ -81,92 +82,32 @@ onMounted(() => {
 const handleSubmit = async () => {
 	const isValid = await useValidateUrl(url.value);
 	if (!isValid) {
+		finish();
 		return;
 	}
 	if (!url.value) {
+		finish();
 		return;
 	}
-	let normalizedUrl = url.value;
-	if (
-		!normalizedUrl.startsWith("http://") &&
-		!normalizedUrl.startsWith("https://")
-	) {
-		normalizedUrl = `https://${normalizedUrl}`;
-	}
+
+	let normalizedUrl = normalizeUrl(url.value);
+
 	start();
+
 	try {
-		const urlResponse = await $fetch("/api/urls", {
+		const response = await $fetch("/api/process-url", {
 			method: "POST",
-			body: {
-				originalUrl: normalizedUrl,
-				isAnonymous: true,
-			},
+			body: { url: normalizedUrl },
 		});
-
-		if (urlResponse.body && urlResponse.body.shortUrl) {
-			const shortUrl = urlResponse.body.shortUrl;
-			const fetchedMetadata = await $fetch(
-				`/api/extract-metadata?url=${encodeURIComponent(url.value)}`,
-			);
-			if (fetchedMetadata) {
-				setMetadata({ ...fetchedMetadata, url: normalizedUrl });
-				if (metadata.value) {
-					const { title, description, author, keywords, headings } =
-						metadata.value;
-					const filteredMetadata = {
-						title,
-						description,
-						author,
-						keywords,
-						headings,
-					};
-
-					const urlExists = await $fetch(
-						`/api/urls?originalUrl=${encodeURIComponent(normalizedUrl)}`,
-						{ method: "GET" },
-					);
-
-					if (urlExists) {
-						const existingOGData = await $fetch(
-							`/api/opengraph_images?originalUrl=${encodeURIComponent(normalizedUrl)}`,
-						);
-
-						let generatedTitle, generatedDescription;
-
-						if (
-							existingOGData.body &&
-							existingOGData.body.title &&
-							existingOGData.body.description
-						) {
-							generatedTitle = existingOGData.body.title;
-							generatedDescription = existingOGData.body.description;
-						} else {
-							const generatedData = await useGenerateAI(filteredMetadata);
-							generatedTitle = generatedData.generatedTitle;
-							generatedDescription = generatedData.generatedDescription;
-
-							await $fetch("/api/opengraph_images", {
-								method: "POST",
-								body: {
-									title: generatedTitle,
-									description: generatedDescription,
-									shortUrl: shortUrl,
-									originalUrl: normalizedUrl,
-								},
-							});
-						}
-					} else {
-						console.error("El originalUrl no existe en la tabla referenciada");
-					}
-					router.push("/opengraph");
-				}
-			} else {
-				console.error("Fetched metadata is null or undefined");
-				setMetadata(null);
-			}
+		if (response.body.metadata) {
+			setOldMetadata(response.body.oldMetadata);
+			setMetadata(response.body.metadata);
+			router.push("/opengraph");
+		} else {
+			console.error("Failed to process URL", response);
 		}
 	} catch (error) {
-		console.error("Error in handleSubmit:", error);
+		console.error("Failed to process URL", error);
 		setMetadata(null);
 	} finally {
 		finish();

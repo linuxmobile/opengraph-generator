@@ -1,14 +1,14 @@
 <template>
   <div class="w-full h-fit relative max-w-full">
     <div class="w-full absolute z-2 top-2 -left-2 text-slate-300 p-4 rounded-b-3xl">
-      <button @click="fetchMetadata" class="rounded-full p-2 bg-white/10 flex gap-x-2 group">
+      <button @click="handleGenerateWithAI" class="rounded-full p-2 bg-white/10 flex gap-x-2 group">
         <Sparkle class="size-6"/>
         <p class="group-hover:block hidden pr-1">Generate w/ AI</p>
       </button>
     </div>
     <OpengraphPreview
-      :title="title"
-      :description="description ? description : undefined"
+      :title="sessionTitle"
+      :description="sessionDescription ? sessionDescription : undefined"
       :author="author"
       :url="url ? url : undefined"
       :svg="svg ? svg : undefined"
@@ -29,7 +29,7 @@
 import Sparkle from "~/assets/Sparkle.vue";
 import { Settings } from "lucide-vue-next";
 
-const { setMetadata, metadata } = useMetadata();
+const { metadata, oldMetadata } = useMetadata();
 
 const props = defineProps({
 	title: String,
@@ -46,44 +46,24 @@ const emit = defineEmits([
 	"updateSelectedId",
 	"toggleOptionsPanel",
 	"metadataUpdate",
+	"updateOldMetadata",
 ]);
 
-async function fetchMetadata() {
-	if (!props.url) {
-		console.log("URL is not provided in FetchMetadata");
-		return;
+const sessionTitle = ref(props.title);
+const sessionDescription = ref(props.description);
+
+function updateMetadataFromOldMetadata() {
+	if (oldMetadata.value) {
+		sessionTitle.value = oldMetadata.value.title;
+		sessionDescription.value = oldMetadata.value.description;
 	}
-	let normalizedUrl = props.url;
-	if (
-		!normalizedUrl.startsWith("https://") &&
-		!normalizedUrl.startsWith("http://")
-	) {
-		normalizedUrl = "https://" + normalizedUrl;
-	}
+}
 
-	if (normalizedUrl.endsWith("/")) {
-		normalizedUrl = normalizedUrl.slice(0, -1);
-	}
-
-	try {
-		const urlResponse = await $fetch(
-			`/api/opengraph_images?originalUrl=${encodeURIComponent(normalizedUrl)}`,
-			{
-				method: "GET",
-			},
-		);
-
-		const { title, description } = urlResponse.body;
-		if (!title || !description) {
-			setMetadata(null);
-			return;
-		}
-
-		setMetadata({ ...metadata.value, title, description });
-		emit("metadataUpdate", { title, description });
-	} catch (error) {
-		console.log("Error fetching metadata", error);
-		setMetadata(null);
+function updateMetadataFromProps() {
+	if (metadata.value) {
+		sessionTitle.value = metadata.value.title;
+		sessionDescription.value = metadata.value.description;
+		emit("updateOldMetadata", metadata.value);
 	}
 }
 
@@ -94,4 +74,11 @@ function updateSelectedId(id) {
 function emitToggleOptionsPanel() {
 	emit("toggleOptionsPanel");
 }
+
+function handleGenerateWithAI() {
+	updateMetadataFromProps();
+	emit("metadataUpdate", metadata.value);
+	emit("updateOldMetadata", metadata.value);
+}
+updateMetadataFromOldMetadata();
 </script>
