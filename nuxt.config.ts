@@ -1,19 +1,18 @@
 export default defineNuxtConfig({
 	compatibilityDate: "2024-04-03",
 	devtools: { enabled: true },
-
 	runtimeConfig: {
 		public: {
-			baseUrl: process.env.BASE_URL || "http://localhost:3000",
+			baseUrl: process.env.BASE_URL,
 		},
 		private: {
 			apiSecretToken: process.env.API_SECRET_TOKEN,
 			apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
 		},
-		cloudinaryUrl: import.meta.env.CLOUDINARY_URL,
-		cloudinaryCloudName: import.meta.env.CLOUDINARY_CLOUD_NAME,
-		cloudinaryApiKey: import.meta.env.CLOUDINARY_API_KEY,
-		cloudinaryApiSecret: import.meta.env.CLOUDINARY_API_SECRET,
+		cloudinaryUrl: process.env.CLOUDINARY_URL,
+		cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
+		cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+		cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
 	},
 	supabase: {
 		url: process.env.SUPABASE_URL,
@@ -33,6 +32,11 @@ export default defineNuxtConfig({
 				"Access-Control-Allow-Headers":
 					"Content-Type, Authorization, X-API-SECRET",
 			},
+		},
+	},
+	nitro: {
+		prerender: {
+			ignore: ["/opengraph", "/404", "/200"],
 		},
 	},
 	experimental: {
