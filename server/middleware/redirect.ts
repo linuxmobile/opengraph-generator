@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 		!slug ||
 		slug.startsWith("api") ||
 		slug === "opengraph" ||
-		slug === "preview"
+		slug === "generator"
 	) {
 		return;
 	}
