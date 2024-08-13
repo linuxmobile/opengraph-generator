@@ -6,7 +6,7 @@ export const templates = {
 			description: "font-medium text-lg text-black",
 			author: "font-semibold text-xl text-black",
 			url: "text-center italic text-black underline",
-			svg: "size-7 absolute top-4 right-5 invert",
+			svg: "size-7 absolute top-4 right-5 !invert",
 			background: "bg-[#f89b29]",
 		},
 		{

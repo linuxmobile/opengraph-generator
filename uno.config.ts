@@ -11,5 +11,5 @@ export default defineConfig({
 			grotesk: "Space Grotesk",
 		},
 	},
-	include: ["./utils/template.ts"],
+	include: ["./**/*.{ts,jsx,tsx,vue,html}", "./utils/template.ts"],
 });

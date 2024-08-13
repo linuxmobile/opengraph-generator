@@ -8,12 +8,13 @@
       <p :class="activeTemplate.url" v-if="metadata.url">{{ metadata.url }}</p>
       <p :class="activeTemplate.author" v-if="metadata.author">{{ metadata.author }}</p>
       <img
+        :class="activeTemplate.svg"
         v-if="metadata.favicon"
         :src="getFaviconUrl(metadata.favicon)" alt="Favicon"
-        class="size-8 aspect-auto">
+        class="aspect-auto">
     </div>
   </div>
-  <div class="slider">
+  <div class="w-full flex items-center justify-start gap-x-6">
     <button
       v-for="template in templates[selectedCategory]"
       :key="template.id"
