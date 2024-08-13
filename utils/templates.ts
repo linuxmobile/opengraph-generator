@@ -2,12 +2,12 @@ export const templates = {
 	minimal: [
 		{
 			id: 1,
-			title: "font-bold text-4xl text-balance text-white",
-			description: "font-medium text-lg text-gray-300",
-			author: "font-semibold text-xl text-gray-400",
-			url: "text-center italic text-blue-500 underline",
-			svg: "size-7 absolute top-4 right-5",
-			background: "bg-black",
+			title: "font-bold text-4xl text-balance text-black",
+			description: "font-medium text-lg text-black",
+			author: "font-semibold text-xl text-black",
+			url: "text-center italic text-black underline",
+			svg: "size-7 absolute top-4 right-5 invert",
+			background: "bg-[#f89b29]",
 		},
 		{
 			id: 2,
