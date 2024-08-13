@@ -4,25 +4,26 @@
       <input
         type="text"
         v-model="url"
-        class="w-full px-12 py-2 text-white placeholder-white/60 bg-white/10 backdrop-blur-md rounded-full
-          focus:outline-none border-2 border-gray-200/50 drop-shadow-2xl"
+        class="w-full px-12 py-3 text-white placeholder-white/70 placeholder-tracking-wide bg-white/10 backdrop-blur-md rounded-full
+          focus:outline-none border-1 border-white/30 drop-shadow-2xl"
         :placeholder="placeholder"/>
-      <Sparkles class="top-1/2 left-3 absolute -translate-y-1/2 bg-transparent border-none p-0 size-5 text-gray-400" />
+      <SparkleInput class="top-1/2 left-4 absolute -translate-y-1/2 bg-transparent border-none p-0 size-5 text-white" />
       <button
         type="submit"
         class="absolute top-1/2 right-3 -translate-y-1/2 flex items-center justify-center
-          px-4 py-1 text-gray-400 bg-black/10 border-1 border-gray-500/40 rounded-full p-0
+          px-3 py-0.5 text-gray-400 bg-black/10 border-1 border-white/40 rounded-full p-0
           hover:bg-gradient-to-t hover:from-black/20 hover:to-transparent bg-gradient-to-t
           from-black/5 to-transparent">
-        <p class="font-semibold text-white/80 mb-0.3">Generate</p>
-        <ArrowRight />
+        <p class="text-white/80 mb-0.3 pr-1">Generate</p>
+        <ArrowRight class="size-4" />
       </button>
     </div>
   </form>
 </template>
 
 <script setup>
-import { ArrowRight, Sparkles } from "lucide-vue-next";
+import { ArrowRight } from "lucide-vue-next";
+import SparkleInput from "~/assets/SparkleInput.vue";
 import { useValidateUrl } from "~/composables/useValidateUrl";
 import { normalizeUrl } from "~/utils/normalizeUrl";
 
@@ -102,7 +103,7 @@ const handleSubmit = async () => {
 		if (response.body.metadata) {
 			setOldMetadata(response.body.oldMetadata);
 			setMetadata(response.body.metadata);
-			router.push("/opengraph");
+			router.push("/generator");
 		} else {
 			console.error("Failed to process URL", response);
 		}
