@@ -35,6 +35,4 @@ const getFaviconUrl = (favicon) => {
 	const baseurl = normalizeUrl(metadata.value.url || "");
 	return `${baseurl}${favicon}`;
 };
-
-getFaviconUrl();
 </script>
