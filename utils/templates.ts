@@ -16,11 +16,11 @@ export const templates = {
 			},
 			url: {
 				sm: "text-center italic font-medium text-black",
-				md: "text-center italic font-medium text-black sm:text-2xl",
+				md: "text-center italic font-medium text-black text-2xl",
 			},
 			svg: {
 				sm: "size-7 absolute top-4 left-4",
-				md: "absolute size-10 right-6 top-5",
+				md: "absolute size-10 left-6 top-5",
 			},
 			background: "bg-[#f89b29]",
 		},
@@ -44,7 +44,7 @@ export const templates = {
 			},
 			svg: {
 				sm: "size-6 absolute bottom-4 left-5",
-				md: "size-9 left-6 bottom-5",
+				md: "size-10 absolute left-6 bottom-5",
 			},
 			background: "bg-[#618985]",
 		},
@@ -64,11 +64,11 @@ export const templates = {
 			},
 			url: {
 				sm: "text-center italic font-medium text-gray-100",
-				md: "text-center italic font-medium text-gray-100 text-xl",
+				md: "text-center italic font-medium text-gray-100 text-2xl",
 			},
 			svg: {
 				sm: "size-8 absolute top-6 left-6",
-				md: "size-11 left-8 top-8",
+				md: "size-12 absolute left-8 top-8",
 			},
 			background: "bg-[#bc4749]",
 		},
@@ -82,11 +82,11 @@ export const templates = {
 			},
 			description: {
 				sm: "font-medium text-lg text-white/90",
-				md: "font-medium text-xl text-white/90",
+				md: "w-full font-medium text-4xl text-white/90",
 			},
 			author: {
 				sm: "font-semibold text-xl text-white/80",
-				md: "font-semibold text-2xl text-white/80",
+				md: "font-semibold text-3xl text-white/80",
 			},
 			url: {
 				sm: "text-center italic text-white font-medium",
@@ -94,7 +94,7 @@ export const templates = {
 			},
 			svg: {
 				sm: "size-7 absolute top-4 left-4",
-				md: "size-10 absolute top-5 right-6",
+				md: "size-10 absolute top-5 left-6",
 			},
 			background: "bg-[url('/assets/8.jpg')] bg-cover bg-top",
 		},
@@ -106,19 +106,19 @@ export const templates = {
 			},
 			description: {
 				sm: "font-normal text-lg text-gray-200",
-				md: "font-normal text-xl text-gray-200",
+				md: "w-full font-normal text-4xl text-gray-200",
 			},
 			author: {
 				sm: "font-semibold text-xl text-gray-300",
-				md: "font-semibold text-2xl text-gray-300",
+				md: "font-semibold text-3xl text-gray-300",
 			},
 			url: {
 				sm: "text-center italic text-gray-100",
-				md: "text-center italic text-gray-100 text-2xl",
+				md: "text-center italic text-gray-100 text-3xl",
 			},
 			svg: {
 				sm: "size-6 absolute bottom-4 right-4",
-				md: "size-9 absolute bottom-5 right-6",
+				md: "size-10 absolute bottom-5 right-6",
 			},
 			background: "bg-[url('/assets/5.jpg')] bg-cover bg-top",
 		},
@@ -130,7 +130,7 @@ export const templates = {
 			},
 			description: {
 				sm: "font-light text-md text-white/75",
-				md: "font-light text-xl text-white/75",
+				md: "w-full font-light text-3xl text-white/75",
 			},
 			author: {
 				sm: "font-semibold text-lg text-white/70",
@@ -156,7 +156,7 @@ export const templates = {
 			},
 			description: {
 				sm: "font-medium text-lg text-black",
-				md: "font-medium text-xl text-black",
+				md: "w-full font-medium text-4xl text-black",
 			},
 			author: {
 				sm: "font-semibold text-xl text-black",
@@ -180,7 +180,7 @@ export const templates = {
 			},
 			description: {
 				sm: "font-medium text-lg text-black",
-				md: "font-medium text-xl text-black",
+				md: "w-full font-medium text-4xl text-black",
 			},
 			author: {
 				sm: "font-semibold text-xl text-black",
@@ -204,7 +204,7 @@ export const templates = {
 			},
 			description: {
 				sm: "font-light text-md text-black",
-				md: "font-light text-xl text-black",
+				md: "w-full font-light text-4xl text-black",
 			},
 			author: {
 				sm: "font-semibold text-lg text-black",
@@ -218,7 +218,7 @@ export const templates = {
 				sm: "size-8 absolute top-6 left-6",
 				md: "size-11 absolute top-8 left-8",
 			},
-			background: "bg-[url('/assets/c3.jpg')]",
+			background: "bg-[url('/assets/c3.jpg')] bg-cover bg-top",
 		},
 	],
 	typographic: [
