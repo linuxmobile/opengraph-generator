@@ -2,15 +2,15 @@
   <div class="grow my-12">
     <div
       :class="activeTemplate.background"
-      class="relative w-full h-auto flex aspect-video flex-col items-center justify-center p-6 rounded-3xl">
-      <h1 :class="activeTemplate.title" v-if="metadata.title">{{ metadata.title }}</h1>
-      <p :class="activeTemplate.description">{{ metadata.description }}</p>
-      <p :class="activeTemplate.url" v-if="metadata.url">{{ metadata.url }}</p>
-      <p :class="activeTemplate.author" v-if="metadata.author">{{ metadata.author }}</p>
+      class="relative w-full h-auto flex aspect-video flex-col gap-y-3 items-center justify-center p-6 rounded-3xl">
+      <p :class="activeTemplate.title.sm" v-if="oldMetadata.title">{{ oldMetadata.title }}</p>
+      <p :class="activeTemplate.description.sm">{{ oldMetadata.description }}</p>
+      <p :class="activeTemplate.url.sm" v-if="oldMetadata.url">{{ oldMetadata.url }}</p>
+      <p :class="activeTemplate.author.sm" v-if="oldMetadata.author">{{ oldMetadata.author }}</p>
       <img
-        :class="activeTemplate.svg"
-        v-if="metadata.favicon"
-        :src="getFaviconUrl(metadata.favicon)" alt="Favicon"
+        :class="activeTemplate.svg.sm"
+        v-if="oldMetadata.favicon"
+        :src="getFaviconUrl(oldMetadata.favicon)" alt="Favicon"
         class="aspect-auto">
     </div>
   </div>
@@ -25,14 +25,26 @@
   </div>
 </template>
 <script setup>
+import { useLocalStorage } from "@vueuse/core";
 import { templates } from "~/utils/templates";
 import { normalizeUrl } from "~/utils/normalizeUrl";
-const { metadata } = useMetadata();
+
+const { oldMetadata } = useMetadata();
 const { selectedCategory, activeTemplate, setActiveTemplate } =
 	useTemplateStore();
 
 const getFaviconUrl = (favicon) => {
-	const baseurl = normalizeUrl(metadata.value.url || "");
+	const baseurl = normalizeUrl(oldMetadata.value.url || "");
 	return `${baseurl}${favicon}`;
 };
+
+const activeTemplateStorage = useLocalStorage("activeTemplate", activeTemplate);
+const oldMetadataStorage = useLocalStorage("oldMetadata", oldMetadata);
+
+watch(activeTemplate, (newVal) => {
+	activeTemplateStorage.value = newVal;
+});
+watch(oldMetadata, (newVal) => {
+	oldMetadataStorage.value = newVal;
+});
 </script>

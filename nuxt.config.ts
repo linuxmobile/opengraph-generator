@@ -21,7 +21,7 @@ export default defineNuxtConfig({
 		redirect: false,
 	},
 	css: ["@unocss/reset/tailwind.css"],
-	modules: ["@unocss/nuxt", "nuxt-lucide-icons", "@nuxtjs/supabase"],
+	modules: ["@unocss/nuxt", "@nuxtjs/supabase"],
 	routeRules: {
 		"/": { prerender: true },
 		"/api/**": {

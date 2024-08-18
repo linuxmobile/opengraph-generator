@@ -1,10 +1,7 @@
-import { toSvg } from "html-to-image";
+import { toPng } from "@intuiface/html-to-image";
+import { useGlobalGenericState } from "~/utils/useGlobalGenericState";
 
-export const useOpengraphImage = () => {
-	const [opengraphID, setOpengraphID] = useGlobalGenericState<number>(
-		"opengraphID",
-		1,
-	);
+export const useGenerateOGImage = () => {
 	const [ogImageUrl, setOgImageUrl] = useGlobalGenericState<string | null>(
 		"ogImageUrl",
 		null,
@@ -14,14 +11,14 @@ export const useOpengraphImage = () => {
 		element: HTMLElement,
 	): Promise<string | null> => {
 		try {
-			const svgDataUrl = await toSvg(element, {
-				height: 315,
-				width: 600,
+			const svgDataUrl = await toPng(element, {
+				height: 630,
+				width: 1200,
 			});
 			const response = await fetch(svgDataUrl);
 			const blob = await response.blob();
 			const blobUrl = URL.createObjectURL(blob);
-			ogImageUrl.value = blobUrl;
+			setOgImageUrl(blobUrl);
 			return blobUrl;
 		} catch (error: any) {
 			console.error("Error generating image", error.message);
@@ -30,8 +27,6 @@ export const useOpengraphImage = () => {
 	};
 
 	return {
-		opengraphID,
-		setOpengraphID,
 		ogImageUrl,
 		setOgImageUrl,
 		generateImage,

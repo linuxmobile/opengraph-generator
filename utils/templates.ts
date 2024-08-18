@@ -2,117 +2,296 @@ export const templates = {
 	minimal: [
 		{
 			id: 1,
-			title: "font-bold text-4xl text-balance text-black",
-			description: "font-medium text-lg text-black",
-			author: "font-semibold text-xl text-black",
-			url: "text-center italic font-medium text-black",
-			svg: "size-7 absolute top-4 right-5 !invert",
+			title: {
+				sm: "font-bold text-4xl text-balance text-black",
+				md: "font-bold text-7xl text-balance text-black",
+			},
+			description: {
+				sm: "font-normal text-lg text-black",
+				md: "w-full font-medium text-black text-4xl",
+			},
+			author: {
+				sm: "font-semibold text-black text-xl",
+				md: "font-semibold text-black text-3xl",
+			},
+			url: {
+				sm: "text-center italic font-medium text-black",
+				md: "text-center italic font-medium text-black sm:text-2xl",
+			},
+			svg: {
+				sm: "size-7 absolute top-4 left-4",
+				md: "absolute size-10 right-6 top-5",
+			},
 			background: "bg-[#f89b29]",
 		},
 		{
 			id: 2,
-			title: "font-extrabold text-5xl text-balance text-black",
-			description: "font-normal text-lg text-black",
-			author: "font-semibold text-xl text-black",
-			url: "text-center italic font-medium text-gray-900",
-			svg: "size-6 absolute bottom-4 left-5",
+			title: {
+				sm: "font-extrabold text-5xl text-balance text-black",
+				md: "font-extrabold text-8xl text-balance text-black",
+			},
+			description: {
+				sm: "font-normal text-lg text-black",
+				md: "w-full font-normal text-4xl text-black",
+			},
+			author: {
+				sm: "font-semibold text-xl text-black",
+				md: "font-semibold text-3xl text-black",
+			},
+			url: {
+				sm: "text-center italic font-medium text-gray-900",
+				md: "text-center italic font-medium text-gray-900 text-3xl",
+			},
+			svg: {
+				sm: "size-6 absolute bottom-4 left-5",
+				md: "size-9 left-6 bottom-5",
+			},
 			background: "bg-[#618985]",
 		},
 		{
 			id: 3,
-			title: "font-bold text-3xl text-balance text-white",
-			description: "font-light text-md text-white",
-			author: "font-semibold text-lg text-gray-100",
-			url: "text-center italic font-medium text-gray-100",
-			svg: "size-8 absolute top-6 left-6",
+			title: {
+				sm: "font-bold text-3xl text-balance text-white",
+				md: "font-bold text-6xl text-balance text-white",
+			},
+			description: {
+				sm: "font-light text-md text-white",
+				md: "w-full font-light text-3xl text-white",
+			},
+			author: {
+				sm: "font-semibold text-lg text-gray-100",
+				md: "font-semibold text-2xl text-gray-100",
+			},
+			url: {
+				sm: "text-center italic font-medium text-gray-100",
+				md: "text-center italic font-medium text-gray-100 text-xl",
+			},
+			svg: {
+				sm: "size-8 absolute top-6 left-6",
+				md: "size-11 left-8 top-8",
+			},
 			background: "bg-[#bc4749]",
 		},
 	],
 	gradients: [
 		{
 			id: 1,
-			title: "font-bold text-4xl text-balance text-white",
-			description: "font-medium text-lg text-white/90",
-			author: "font-semibold text-xl text-white/80",
-			url: "text-center italic text-white font-medium",
-			svg: "size-7 absolute top-4 left-4",
+			title: {
+				sm: "font-bold text-4xl text-balance text-white",
+				md: "font-bold text-7xl text-balance text-white",
+			},
+			description: {
+				sm: "font-medium text-lg text-white/90",
+				md: "font-medium text-xl text-white/90",
+			},
+			author: {
+				sm: "font-semibold text-xl text-white/80",
+				md: "font-semibold text-2xl text-white/80",
+			},
+			url: {
+				sm: "text-center italic text-white font-medium",
+				md: "text-center italic text-white font-medium text-2xl",
+			},
+			svg: {
+				sm: "size-7 absolute top-4 left-4",
+				md: "size-10 absolute top-5 right-6",
+			},
 			background: "bg-[url('/assets/8.jpg')] bg-cover bg-top",
 		},
 		{
 			id: 2,
-			title: "font-extrabold text-5xl text-balance text-gray-50",
-			description: "font-normal text-lg text-gray-200",
-			author: "font-semibold text-xl text-gray-300",
-			url: "text-center italic text-gray-100",
-			svg: "size-6 absolute bottom-4 right-4",
+			title: {
+				sm: "font-extrabold text-5xl text-balance text-gray-50",
+				md: "font-extrabold text-8xl text-balance text-gray-50",
+			},
+			description: {
+				sm: "font-normal text-lg text-gray-200",
+				md: "font-normal text-xl text-gray-200",
+			},
+			author: {
+				sm: "font-semibold text-xl text-gray-300",
+				md: "font-semibold text-2xl text-gray-300",
+			},
+			url: {
+				sm: "text-center italic text-gray-100",
+				md: "text-center italic text-gray-100 text-2xl",
+			},
+			svg: {
+				sm: "size-6 absolute bottom-4 right-4",
+				md: "size-9 absolute bottom-5 right-6",
+			},
 			background: "bg-[url('/assets/5.jpg')] bg-cover bg-top",
 		},
 		{
 			id: 3,
-			title: "font-bold text-3xl text-balance text-white",
-			description: "font-light text-md text-white/75",
-			author: "font-semibold text-lg text-white/70",
-			url: "text-center font-medium italic text-white",
-			svg: "size-8 absolute top-6 right-6",
+			title: {
+				sm: "font-bold text-3xl text-balance text-white",
+				md: "font-bold text-6xl text-balance text-white",
+			},
+			description: {
+				sm: "font-light text-md text-white/75",
+				md: "font-light text-xl text-white/75",
+			},
+			author: {
+				sm: "font-semibold text-lg text-white/70",
+				md: "font-semibold text-xl text-white/70",
+			},
+			url: {
+				sm: "text-center font-medium italic text-white",
+				md: "text-center font-medium italic text-white text-2xl",
+			},
+			svg: {
+				sm: "size-8 absolute top-6 right-6",
+				md: "size-11 absolute top-8 right-8",
+			},
 			background: "bg-[url('/assets/9.jpg')] bg-cover bg-top",
 		},
 	],
 	colorful: [
 		{
 			id: 1,
-			title:
-				"font-black text-4xl text-balance text-transparent bg-gradient-to-r from-sky-900 to-black bg-clip-text",
-			description: "font-medium text-lg text-black",
-			author: "font-semibold text-xl text-black",
-			url: "text-center font-medium italic text-black",
-			svg: "size-7 absolute top-4 right-4",
+			title: {
+				sm: "font-black text-4xl text-balance text-transparent bg-gradient-to-r from-sky-900 to-black bg-clip-text",
+				md: "font-black text-7xl text-balance text-transparent bg-gradient-to-r from-sky-900 to-black bg-clip-text",
+			},
+			description: {
+				sm: "font-medium text-lg text-black",
+				md: "font-medium text-xl text-black",
+			},
+			author: {
+				sm: "font-semibold text-xl text-black",
+				md: "font-semibold text-2xl text-black",
+			},
+			url: {
+				sm: "text-center font-medium italic text-black",
+				md: "text-center font-medium italic text-black text-2xl",
+			},
+			svg: {
+				sm: "size-7 absolute top-4 right-4",
+				md: "size-10 absolute top-5 right-6",
+			},
 			background: "bg-[url('/assets/c1.jpg')] bg-cover bg-top",
 		},
 		{
 			id: 2,
-			title: "font-black text-5xl text-balance text-black",
-			description: "font-medium text-lg text-black",
-			author: "font-semibold text-xl text-black",
-			url: "text-center font-medium italic text-black",
-			svg: "size-6 absolute bottom-4 left-4",
+			title: {
+				sm: "font-black text-5xl text-balance text-black",
+				md: "font-black text-8xl text-balance text-black",
+			},
+			description: {
+				sm: "font-medium text-lg text-black",
+				md: "font-medium text-xl text-black",
+			},
+			author: {
+				sm: "font-semibold text-xl text-black",
+				md: "font-semibold text-2xl text-black",
+			},
+			url: {
+				sm: "text-center font-medium italic text-black",
+				md: "text-center font-medium italic text-black text-2xl",
+			},
+			svg: {
+				sm: "size-6 absolute bottom-4 left-4",
+				md: "size-9 absolute bottom-5 left-6",
+			},
 			background: "bg-[url('/assets/c2.jpg')] bg-cover bg-top",
 		},
 		{
 			id: 3,
-			title: "font-bold text-3xl text-balance text-slate-900",
-			description: "font-light text-md text-black",
-			author: "font-semibold text-lg text-black",
-			url: "text-center medium italic text-black",
-			svg: "size-8 absolute top-6 left-6",
+			title: {
+				sm: "font-bold text-3xl text-balance text-slate-900",
+				md: "font-bold text-6xl text-balance text-slate-900",
+			},
+			description: {
+				sm: "font-light text-md text-black",
+				md: "font-light text-xl text-black",
+			},
+			author: {
+				sm: "font-semibold text-lg text-black",
+				md: "font-semibold text-xl text-black",
+			},
+			url: {
+				sm: "text-center medium italic text-black",
+				md: "text-center medium italic text-black text-2xl",
+			},
+			svg: {
+				sm: "size-8 absolute top-6 left-6",
+				md: "size-11 absolute top-8 left-8",
+			},
 			background: "bg-[url('/assets/c3.jpg')]",
 		},
 	],
 	typographic: [
 		{
 			id: 1,
-			title: "font-serif font-bold text-5xl text-center text-gray-900",
-			description: "font-serif font-light text-xl text-gray-700",
-			author: "font-mono font-medium text-lg text-gray-600",
-			url: "text-center font-serif italic text-gray-800",
-			svg: "size-7 absolute top-4 right-4",
+			title: {
+				sm: "font-serif font-bold text-5xl text-center text-gray-900",
+				md: "font-serif font-bold text-8xl text-center text-gray-900",
+			},
+			description: {
+				sm: "font-serif font-light text-xl text-gray-700",
+				md: "font-serif font-light text-2xl text-gray-700",
+			},
+			author: {
+				sm: "font-mono font-medium text-lg text-gray-600",
+				md: "font-mono font-medium text-xl text-gray-600",
+			},
+			url: {
+				sm: "text-center font-serif italic text-gray-800",
+				md: "text-center font-serif italic text-gray-800 text-2xl",
+			},
+			svg: {
+				sm: "size-7 absolute top-4 right-4",
+				md: "size-10 absolute top-5 right-6",
+			},
 			background: "bg-white",
 		},
 		{
 			id: 2,
-			title: "font-sans font-bold text-4xl text-left text-gray-900",
-			description: "font-sans font-light text-lg text-gray-700",
-			author: "font-mono font-medium text-md text-gray-600",
-			url: "text-left font-sans italic text-gray-800",
-			svg: "size-6 absolute bottom-4 left-4",
+			title: {
+				sm: "font-sans font-bold text-4xl text-left text-gray-900",
+				md: "font-sans font-bold text-7xl text-left text-gray-900",
+			},
+			description: {
+				sm: "font-sans font-light text-lg text-gray-700",
+				md: "font-sans font-light text-xl text-gray-700",
+			},
+			author: {
+				sm: "font-mono font-medium text-md text-gray-600",
+				md: "font-mono font-medium text-lg text-gray-600",
+			},
+			url: {
+				sm: "text-left font-sans italic text-gray-800",
+				md: "text-left font-sans italic text-gray-800 text-2xl",
+			},
+			svg: {
+				sm: "size-6 absolute bottom-4 left-4",
+				md: "size-9 absolute bottom-5 left-6",
+			},
 			background: "bg-gray-50",
 		},
 		{
 			id: 3,
-			title: "font-serif font-extrabold text-6xl text-right text-gray-900",
-			description: "font-serif font-thin text-md text-gray-600",
-			author: "font-mono font-semibold text-lg text-gray-500",
-			url: "text-right font-serif italic text-gray-700",
-			svg: "size-8 absolute top-6 left-6",
+			title: {
+				sm: "font-serif font-extrabold text-6xl text-right text-gray-900",
+				md: "font-serif font-extrabold text-9xl text-right text-gray-900",
+			},
+			description: {
+				sm: "font-serif font-thin text-md text-gray-600",
+				md: "font-serif font-thin text-lg text-gray-600",
+			},
+			author: {
+				sm: "font-mono font-semibold text-lg text-gray-500",
+				md: "font-mono font-semibold text-xl text-gray-500",
+			},
+			url: {
+				sm: "text-right font-serif italic text-gray-700",
+				md: "text-right font-serif italic text-gray-700 text-2xl",
+			},
+			svg: {
+				sm: "size-8 absolute top-6 left-6",
+				md: "size-11 absolute top-8 left-8",
+			},
 			background: "bg-gray-100",
 		},
 	],

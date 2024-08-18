@@ -11,18 +11,18 @@
       <button
         type="submit"
         class="absolute top-1/2 right-3 -translate-y-1/2 flex items-center justify-center
-          px-3 py-0.5 text-gray-400 bg-black/10 border-1 border-white/40 rounded-full p-0
+          px-2 py-0.5 text-gray-400 bg-black/10 border-1 border-white/40 rounded-full
           hover:bg-gradient-to-t hover:from-black/20 hover:to-transparent bg-gradient-to-t
           from-black/5 to-transparent">
         <p class="text-white/80 mb-0.3 pr-1">Generate</p>
-        <ArrowRight class="size-4" />
+        <ArrowRight class="size-5" />
       </button>
     </div>
   </form>
 </template>
 
 <script setup>
-import { ArrowRight } from "lucide-vue-next";
+import ArrowRight from "~/assets/ArrowRight.vue";
 import SparkleInput from "~/assets/SparkleInput.vue";
 import { useValidateUrl } from "~/composables/useValidateUrl";
 import { normalizeUrl } from "~/utils/normalizeUrl";

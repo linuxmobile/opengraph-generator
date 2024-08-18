@@ -7,6 +7,7 @@ interface Metadata {
 	favicon?: string | null;
 	keywords?: string[];
 	author?: string;
+	shortUrl?: string;
 }
 
 export const useMetadata = () => {
@@ -26,6 +27,7 @@ export const useMetadata = () => {
 			title: newMetadata.title,
 			description: newMetadata.description,
 			favicon: newMetadata.favicon,
+			shortUrl: newMetadata.shortUrl,
 		};
 
 		if (newMetadata.keywords && newMetadata.keywords.length > 0) {

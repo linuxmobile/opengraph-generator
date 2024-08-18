@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const { fetchGradients, gradients } = useGradients();
-const { setOpengraphID } = useOpengraphImage();
+const { setOpengraphID } = useGenerateOGImage();
 
 onMounted(() => {
 	/**

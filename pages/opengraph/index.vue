@@ -50,7 +50,7 @@ import { SMALL_SCREEN_MAX_WIDTH } from "~/constants";
 import { getAbsoluteFaviconUrl } from "~/utils/getAbsoluteFaviconUrl";
 
 const { metadata, setMetadata, oldMetadata, setOldMetadata } = useMetadata();
-const { ogImageUrl } = useOpengraphImage();
+const { ogImageUrl } = useGenerateOGImage();
 const isSmallScreen = useMediaQuery(`(max-width: ${SMALL_SCREEN_MAX_WIDTH})`);
 
 function updateMetadata(newMetadata) {

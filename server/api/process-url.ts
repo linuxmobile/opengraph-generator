@@ -63,6 +63,7 @@ export default defineEventHandler(async (event) => {
 						...metadata,
 						title: generatedTitle,
 						description: generatedDescription,
+						shortUrl: shortUrl,
 					},
 				},
 			};
