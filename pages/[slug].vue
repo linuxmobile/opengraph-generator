@@ -45,6 +45,8 @@ if (error.value) {
 		twitterCard: "summary",
 		twitterImageHeight: 630,
 		twitterImageWidth: 1200,
+		ogImageWidth: 1200,
+		ogImageHeight: 630,
 	});
 }
 </script>
