@@ -55,8 +55,6 @@ export const useOpenGraphService = (event: any) => {
 			throw new Error(error.message);
 		}
 
-		console.log("Inserted OpenGraph data:", insertedData);
-
 		return insertedData;
 	};
 
