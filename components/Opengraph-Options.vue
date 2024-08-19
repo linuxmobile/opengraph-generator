@@ -40,7 +40,7 @@
     </div>
     <div class="flex w-full items-center justify-end gap-x-6">
       <button :disabled="isGenerating" @click="generate" class="rounded-full bg-white/10 px-3 py-2">Generate Opengraph</button>
-      <button class="rounded-full bg-white/10 px-3 py-2">Download</button>
+      <button @click="handleDownload" class="rounded-full bg-white/10 px-3 py-2">Download</button>
     </div>
   </aside>
   <div class="hidden w-full h-full">
@@ -49,9 +49,10 @@
 </template>
 <script setup>
 import { useClipboard } from "@vueuse/core";
+import { saveAs } from "file-saver";
 const { oldMetadata, metadata } = useMetadata();
 const { activeTemplate } = useTemplateStore();
-const { generateImage } = useGenerateOGImage();
+const { generateImage, ogImageUrl } = useGenerateOGImage();
 const { storeRef } = useTemplateRefState();
 const isGenerating = ref(false);
 
@@ -72,15 +73,38 @@ const generate = async () => {
 					"Content-Type": "application/json",
 				},
 			});
-			// TODO: add a toast message
 			copy(metadata.value.shortUrl);
+			notify.success("URL successfully copied to clipboard!");
 		} catch (error) {
-			console.error("Error uploading image:", error);
+			notify.error("An error occurred while generating the image!");
 		} finally {
 			isGenerating.value = false;
 		}
 	}
 };
+
+const handleDownload = async () => {
+	if (!ogImageUrl.value && storeRef.domRef) {
+		await generateImage(storeRef.domRef);
+	}
+	if (ogImageUrl.value) {
+		const imageBlob = base64ToBlob(ogImageUrl.value);
+		saveAs(imageBlob, "opengraph.jpg");
+		notify.success("Image successfully downloaded!");
+	} else {
+		notify.error("No image to download!");
+	}
+};
+
+function base64ToBlob(base64) {
+	const byteCharacters = atob(base64);
+	const byteNumbers = new Array(byteCharacters.length);
+	for (let i = 0; i < byteCharacters.length; i++) {
+		byteNumbers[i] = byteCharacters.charCodeAt(i);
+	}
+	const byteArray = new Uint8Array(byteNumbers);
+	return new Blob([byteArray], { type: "image/jpeg" });
+}
 
 onMounted(() => {
 	storeRef.domRef = hiddenPreviewRef.value.$el;
