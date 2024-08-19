@@ -1,5 +1,14 @@
 <script setup lang="ts">
+import { useLocalStorage } from "@vueuse/core";
 const currentYear = new Date().getFullYear();
+
+const activeTemplateStorage = useLocalStorage("activeTemplate");
+const oldMetadataStorage = useLocalStorage("oldMetadata");
+
+onMounted(() => {
+	activeTemplateStorage.value = null;
+	oldMetadataStorage.value = null;
+});
 </script>
 <template>
   <div class="relative overflow-hidden">

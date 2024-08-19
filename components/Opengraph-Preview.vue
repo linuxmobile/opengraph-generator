@@ -1,6 +1,7 @@
 <template>
   <div class="grow my-12">
     <div
+      v-if="activeTemplate"
       :class="activeTemplate.background"
       class="relative w-full h-auto flex aspect-video flex-col gap-y-3 items-center justify-center p-6 rounded-3xl">
       <p :class="activeTemplate.title.sm" v-if="oldMetadata.title">{{ oldMetadata.title }}</p>

@@ -99,6 +99,7 @@ const handleSubmit = async () => {
 			method: "POST",
 			body: { url: normalizedUrl },
 		});
+
 		if (response.body.metadata) {
 			setOldMetadata(response.body.oldMetadata);
 			setMetadata(response.body.metadata);

@@ -1,5 +1,7 @@
 <template>
-  <div class="min-w-[1200px] min-h-[630px] max-w-[1200px] max-h-[630px]">
+  <div
+    v-if="activeTemplate"
+    class="min-w-[1200px] min-h-[630px] max-w-[1200px] max-h-[630px]">
     <div
       v-if="domReady"
       ref="domRef"

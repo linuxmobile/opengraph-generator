@@ -1,5 +1,4 @@
 import { useGlobalGenericState } from "~/utils/useGlobalGenericState";
-import { normalizeUrl } from "~/utils/normalizeUrl";
 
 interface Metadata {
 	url: string;
@@ -9,6 +8,7 @@ interface Metadata {
 	keywords?: string[];
 	author?: string;
 	shortUrl?: string;
+	og_image_url?: string | null;
 }
 
 export const useMetadata = () => {
@@ -24,7 +24,10 @@ export const useMetadata = () => {
 
 	const setFilteredMetadata = (newMetadata: Metadata) => {
 		const filteredMetadata: Partial<Metadata> = {
-			url: normalizeUrl(newMetadata.url),
+			url:
+				newMetadata.url && newMetadata.url.endsWith("/")
+					? newMetadata.url.slice(0, -1)
+					: newMetadata.url,
 			title: newMetadata.title,
 			description: newMetadata.description,
 			favicon: newMetadata.favicon,
@@ -45,7 +48,10 @@ export const useMetadata = () => {
 
 	const setFilteredOldMetadata = (newOldMetadata: Metadata) => {
 		const filteredOldMetadata: Partial<Metadata> = {
-			url: normalizeUrl(newOldMetadata.url),
+			url:
+				newOldMetadata.url && newOldMetadata.url.endsWith("/")
+					? newOldMetadata.url.slice(0, -1)
+					: newOldMetadata.url,
 			title: newOldMetadata.title,
 			description: newOldMetadata.description,
 			favicon: newOldMetadata.favicon,

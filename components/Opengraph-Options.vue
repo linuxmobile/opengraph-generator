@@ -1,6 +1,8 @@
 <template>
-  <aside class="md:col-span-4 w-full h-full p-5 bg-white/5 flex flex-col gap-y-8 rounded-xl">
-    <div>
+  <aside
+    v-if="oldMetadata"
+    class="md:col-span-4 w-full h-full p-5 bg-white/5 flex flex-col gap-y-8 rounded-xl">
+    <div v-if="oldMetadata.title">
       <label for="title" class="text-sm font-medium">Title</label>
       <input
         id="title"
@@ -9,7 +11,7 @@
         class="mt-1 w-full px-3 py-2 rounded-md bg-white/10"
       />
     </div>
-    <div>
+    <div v-if="oldMetadata.description">
       <label for="description" class="text-sm font-medium">Description</label>
       <textarea
         id="description"
@@ -18,7 +20,7 @@
         class="mt-1 w-full px-3 py-2 rounded-md bg-white/10"
       />
     </div>
-    <div>
+    <div v-if="oldMetadata.url">
       <label for="url" class="text-sm font-medium">URL</label>
       <input
         id="url"
