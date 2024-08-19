@@ -55,7 +55,7 @@ export const useUrlsService = () => {
 
 		const { data: existingUrl, error: fetchError } = await supabase
 			.from("urls")
-			.select("*")
+			.select("original_url")
 			.eq("original_url", originalUrl)
 			.single();
 

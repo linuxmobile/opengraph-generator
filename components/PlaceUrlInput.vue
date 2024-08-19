@@ -81,6 +81,7 @@ onMounted(() => {
 });
 
 const handleSubmit = async () => {
+	// TODO: add feedback isValidating
 	const isValid = await useValidateUrl(url.value);
 	if (!isValid) {
 		finish();
@@ -95,6 +96,7 @@ const handleSubmit = async () => {
 	start();
 
 	try {
+		// TODO: add feedback isProcessing
 		const response = await $fetch("/api/process-url", {
 			method: "POST",
 			body: { url: normalizedUrl },
@@ -111,6 +113,7 @@ const handleSubmit = async () => {
 	} catch (error) {
 		console.error("Failed to process URL", error);
 		setMetadata(null);
+		setOldMetadata(null);
 	} finally {
 		finish();
 	}

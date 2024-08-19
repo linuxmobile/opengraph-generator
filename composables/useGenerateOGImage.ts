@@ -15,8 +15,9 @@ export const useGenerateOGImage = () => {
 				height: 630,
 				width: 1200,
 			});
-			setOgImageUrl(dataUrl);
-			return dataUrl;
+			const base64Image = dataUrl.split(",")[1];
+			setOgImageUrl(base64Image);
+			return base64Image;
 		} catch (error: any) {
 			console.error("Error generating image", error.message);
 			return null;

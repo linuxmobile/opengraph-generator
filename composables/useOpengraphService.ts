@@ -83,8 +83,6 @@ export const useOpenGraphService = (event: any) => {
 			throw new Error(error.message);
 		}
 
-		console.log("Updated OpenGraph data:", data);
-
 		return data;
 	};
 

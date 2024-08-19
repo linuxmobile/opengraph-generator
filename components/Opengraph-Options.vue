@@ -63,16 +63,22 @@ const hiddenPreviewRef = ref(null);
 const generate = async () => {
 	if (storeRef.domRef) {
 		isGenerating.value = true;
-		const image = await generateImage(storeRef.domRef);
-		const response = await $fetch("/api/process-url", {
-			method: "POST",
-			body: JSON.stringify({ url: oldMetadata.value.url, image }),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-		isGenerating.value = false;
-		copy(metadata.value.shortUrl);
+		try {
+			const image = await generateImage(storeRef.domRef);
+			await $fetch("/api/process-url", {
+				method: "POST",
+				body: JSON.stringify({ url: oldMetadata.value.url, image }),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			// TODO: add a toast message
+			copy(metadata.value.shortUrl);
+		} catch (error) {
+			console.error("Error uploading image:", error);
+		} finally {
+			isGenerating.value = false;
+		}
 	}
 };
 

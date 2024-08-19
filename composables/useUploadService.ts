@@ -23,10 +23,8 @@ cloudinary.config({
 export const useUploadService = () => {
 	const uploadImage = async (image: string) => {
 		if (!image) {
-			throw new Error("image is required");
+			throw new Error("Image is required for upload");
 		}
-
-		const base64Formatted = image.replace(/^data:image\/jpeg;base64,/, "");
 
 		const transformationOptions = {
 			transformation: [{ quality: 100 }, { fetch_format: "jpg" }],
@@ -42,22 +40,24 @@ export const useUploadService = () => {
 								...transformationOptions,
 							},
 							(error, result) => {
-								if (error) reject(error);
-								else resolve(result);
+								if (error || !result) {
+									reject(new Error("Failed to upload image to Cloudinary"));
+								} else {
+									resolve(result);
+								}
 							},
 						)
-						.end(Buffer.from(base64Formatted, "base64"));
+						.end(Buffer.from(image, "base64"));
 				},
 			);
 
-			if (!uploadResult) {
-				throw new Error("Something went wrong uploading image to Cloudinary");
-			}
-
 			return uploadResult.secure_url;
 		} catch (error) {
-			console.error("Error uploading to Cloudinary:", error);
-			throw new Error("Failed to upload image to Cloudinary");
+			if (error instanceof Error) {
+				throw new Error(`Upload failed: ${error.message}`);
+			} else {
+				throw new Error("Upload failed");
+			}
 		}
 	};
 
