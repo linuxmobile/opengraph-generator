@@ -3,6 +3,7 @@ import { useMetadataService } from "~/composables/metadataService";
 import { useOpenGraphService } from "~/composables/useOpengraphService";
 import { useUploadService } from "~/composables/useUploadService";
 import { useUrlsService } from "~/composables/useUrlsService";
+import { normalizeUrl } from "~/utils/normalizeUrl";
 
 export default defineEventHandler(async (event) => {
 	const body = await readBody(event);
@@ -24,13 +25,14 @@ export default defineEventHandler(async (event) => {
 		const { getOpenGraphData, createOpenGraphData, updateOpengraphData } =
 			useOpenGraphService(event);
 
-		const shortUrl = await createShortUrl(event, url, true);
+		let normalizedUrl = normalizeUrl(url);
+		const shortUrl = await createShortUrl(event, normalizedUrl, true);
 		const shortUrlSlug = shortUrl?.split("/").pop() || "";
 
-		const metadata = await extractMetadata(url);
+		const metadata = await extractMetadata(normalizedUrl);
 
 		if (metadata) {
-			const existingOGData = await getOpenGraphData(url);
+			const existingOGData = await getOpenGraphData(normalizedUrl);
 
 			let generatedTitle, generatedDescription;
 
@@ -46,13 +48,14 @@ export default defineEventHandler(async (event) => {
 					title: generatedTitle,
 					description: generatedDescription,
 					shortUrl: shortUrlSlug,
-					originalUrl: url,
+					originalUrl: normalizedUrl,
 				});
 			}
 
 			if (image) {
 				const uploadedImage = await uploadImage(image);
-				await updateOpengraphData(url, uploadedImage);
+				await updateOpengraphData(normalizedUrl, uploadedImage);
+				metadata.og_image_url = uploadedImage;
 			}
 
 			return {
@@ -64,6 +67,7 @@ export default defineEventHandler(async (event) => {
 						title: generatedTitle,
 						description: generatedDescription,
 						shortUrl: shortUrl,
+						og_image_url: metadata.og_image_url,
 					},
 				},
 			};

@@ -61,7 +61,14 @@ const hiddenPreviewRef = ref(null);
 const generate = async () => {
 	if (storeRef.domRef) {
 		isGenerating.value = true;
-		await generateImage(storeRef.domRef);
+		const image = await generateImage(storeRef.domRef);
+		const response = await $fetch("/api/process-url", {
+			method: "POST",
+			body: JSON.stringify({ url: oldMetadata.value.url, image }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 		isGenerating.value = false;
 		copy(metadata.value.shortUrl);
 	}

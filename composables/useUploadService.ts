@@ -33,11 +33,20 @@ export const useUploadService = () => {
 		};
 
 		try {
-			const uploadResult: UploadApiResponse = await cloudinary.uploader.upload(
-				`data:image/jpeg;base64,${base64Formatted}`,
-				{
-					folder: "opengraph_images",
-					...transformationOptions,
+			const uploadResult: UploadApiResponse = await new Promise(
+				(resolve, reject) => {
+					cloudinary.uploader
+						.upload_stream(
+							{
+								folder: "opengraph_images",
+								...transformationOptions,
+							},
+							(error, result) => {
+								if (error) reject(error);
+								else resolve(result);
+							},
+						)
+						.end(Buffer.from(base64Formatted, "base64"));
 				},
 			);
 

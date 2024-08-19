@@ -1,4 +1,4 @@
-import { toPng } from "@intuiface/html-to-image";
+import { toJpeg } from "@intuiface/html-to-image";
 import { useGlobalGenericState } from "~/utils/useGlobalGenericState";
 
 export const useGenerateOGImage = () => {
@@ -11,15 +11,12 @@ export const useGenerateOGImage = () => {
 		element: HTMLElement,
 	): Promise<string | null> => {
 		try {
-			const svgDataUrl = await toPng(element, {
+			const dataUrl = await toJpeg(element, {
 				height: 630,
 				width: 1200,
 			});
-			const response = await fetch(svgDataUrl);
-			const blob = await response.blob();
-			const blobUrl = URL.createObjectURL(blob);
-			setOgImageUrl(blobUrl);
-			return blobUrl;
+			setOgImageUrl(dataUrl);
+			return dataUrl;
 		} catch (error: any) {
 			console.error("Error generating image", error.message);
 			return null;

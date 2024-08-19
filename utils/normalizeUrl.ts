@@ -1,4 +1,5 @@
 export function normalizeUrl(url: string): string {
+	url = url.toLowerCase();
 	if (!url.startsWith("http://") && !url.startsWith("https://")) {
 		url = `https://${url}`;
 	}

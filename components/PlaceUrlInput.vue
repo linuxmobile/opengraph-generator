@@ -92,7 +92,6 @@ const handleSubmit = async () => {
 	}
 
 	let normalizedUrl = normalizeUrl(url.value);
-
 	start();
 
 	try {
@@ -103,6 +102,7 @@ const handleSubmit = async () => {
 		if (response.body.metadata) {
 			setOldMetadata(response.body.oldMetadata);
 			setMetadata(response.body.metadata);
+
 			router.push("/generator");
 		} else {
 			console.error("Failed to process URL", response);

@@ -5,20 +5,21 @@
 const route = useRoute();
 const slug = route.params.slug;
 
+console.log("SLUG:", slug);
+
 const { data, error } = await useAsyncData(async () => {
-	const response = await $fetch(`/api/urls?shortUrl=${slug}`);
-
-	if (!response || !response.body.original_url) {
-		throw new Error("Original URL not found");
-	}
-
-	const originalUrl = response.body.original_url;
-
+	console.log("STARTING EXTRACTOR...");
 	const ogResponse = await $fetch(
-		`/api/opengraph_images?originalUrl=${encodeURIComponent(originalUrl)}`,
+		`/api/get-opengraph-data?slug=${encodeURIComponent(slug)}`,
 	);
 
-	const { title, description, og_image_url } = ogResponse.body;
+	console.log("OGRESPONSE:", ogResponse);
+
+	if (!ogResponse || !ogResponse.body) {
+		throw new Error("OpenGraph data not found");
+	}
+
+	const { title, description, og_image_url, originalUrl } = ogResponse.body;
 
 	return {
 		title,
