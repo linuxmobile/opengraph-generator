@@ -13,8 +13,6 @@ const { data, error } = await useAsyncData(async () => {
 		`/api/get-opengraph-data?slug=${encodeURIComponent(slug)}`,
 	);
 
-	console.log("OGRESPONSE:", ogResponse);
-
 	if (!ogResponse || !ogResponse.body) {
 		throw new Error("OpenGraph data not found");
 	}

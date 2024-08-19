@@ -1,7 +1,7 @@
 export async function useValidateUrl(url: string): Promise<boolean> {
 	try {
 		const urlPattern =
-			/^(https?:\/\/)?(www\.)?[a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}(\/[a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
+			/^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,10}(\/[a-zA-Z0-9@:%_\+.~#?&//=]*)?$/gi;
 		if (!urlPattern.test(url)) {
 			alert("The URL is not valid");
 			return false;
