@@ -43,6 +43,8 @@ if (error.value) {
 		twitterDescription: data.value.description,
 		twitterImage: data.value.og_image_url,
 		twitterCard: "summary",
+		twitterImageHeight: 630,
+		twitterImageWidth: 1200,
 	});
 }
 </script>
