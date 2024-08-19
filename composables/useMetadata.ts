@@ -1,4 +1,5 @@
 import { useGlobalGenericState } from "~/utils/useGlobalGenericState";
+import { useStorage } from "@vueuse/core";
 
 interface Metadata {
 	url: string;
@@ -21,6 +22,18 @@ export const useMetadata = () => {
 		"oldMetadata",
 		{} as Metadata,
 	);
+
+	// Create a storage for metadata & oldMetadata
+	const metadataStorage = useStorage("metadata", metadata.value);
+	const oldMetadataStorage = useStorage("oldMetadata", oldMetadata.value);
+
+	watch(metadata, (newMetadata) => {
+		metadataStorage.value = newMetadata;
+	});
+
+	watch(oldMetadata, (newOldMetadata) => {
+		oldMetadataStorage.value = newOldMetadata;
+	});
 
 	const setFilteredMetadata = (newMetadata: Metadata) => {
 		const filteredMetadata: Partial<Metadata> = {
