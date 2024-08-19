@@ -1,5 +1,5 @@
 <template>
-  <div class="grow my-12">
+  <div class="grow my-12 w-full aspect-1.9">
     <div
       v-if="activeTemplate"
       :class="activeTemplate.background"
