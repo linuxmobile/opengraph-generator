@@ -27,26 +27,26 @@ export const templates = {
 		{
 			id: 2,
 			title: {
-				sm: "font-extrabold text-5xl text-balance text-black",
-				md: "font-extrabold text-8xl text-balance text-black",
+				sm: "font-semibold text-4xl text-pretty text-white",
+				md: "font-semibold text-7xl text-pretty text-white",
 			},
 			description: {
-				sm: "font-normal text-lg text-black",
-				md: "w-full font-normal text-4xl text-black",
+				sm: "font-light text-xl text-white text-balance",
+				md: "w-full font-light text-5xl text-white text-balance",
 			},
 			author: {
-				sm: "font-semibold text-xl text-black",
-				md: "font-semibold text-3xl text-black",
+				sm: "font-semibold text-xl text-white",
+				md: "font-semibold text-3xl text-white",
 			},
 			url: {
-				sm: "text-center italic font-medium text-gray-900",
-				md: "text-center italic font-medium text-gray-900 text-3xl",
+				sm: "text-center font-light text-white bg-black/30 rounded-xl border border-white/20 py-1 px-3",
+				md: "text-center font-light text-white bg-black/30 rounded-2xl border border-white/20 py-2 px-3 text-4xl",
 			},
 			svg: {
-				sm: "size-6 absolute bottom-4 left-5",
-				md: "size-10 absolute left-6 bottom-5",
+				sm: "size-8 absolute bottom-4 left-5 rounded-full p-2 bg-black/30",
+				md: "size-14 absolute left-6 bottom-5 rounded-full p-2 bg-black/30",
 			},
-			background: "bg-[#618985]",
+			background: "bg-gradient-to-bl from-[#9aa4a5] to-[#181818]",
 		},
 		{
 			id: 3,
